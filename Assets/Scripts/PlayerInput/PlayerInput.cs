@@ -24,7 +24,7 @@ public class PlayerInput : MonoBehaviour,PlayerActions.IPlayerControlsActions
         playerActions.PlayerControls.SetCallbacks(this);
 
         playerActions.PlayerControls.Enable();
-
+        //playerActions.PlayerControls.Fire.ReadValue<int>() += ;
     }
 
     public void OnMovement(InputAction.CallbackContext value)
@@ -52,14 +52,15 @@ public class PlayerInput : MonoBehaviour,PlayerActions.IPlayerControlsActions
         }
     }
 
+    private int IsFire;
     public void OnFire(InputAction.CallbackContext context)
     {
-        
+        //IsFire = context.ReadValue<int>();
+        Debug.Log("onur xfire "  + IsFire);
         if(context.performed)
         {
             Debug.Log("onurxd1111");
             IsAttacking = true;
-            IsAttacking = false;
             OnAttackLeftInput?.Invoke();
         }
         if(context.canceled)

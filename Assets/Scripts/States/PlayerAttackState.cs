@@ -33,10 +33,15 @@ public class PlayerAttackState : PlayerBaseState
     {
         attack1AnimationTime += Time.deltaTime;
         var currentNormalizedTime = stateMachine.animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+
+        if (stateMachine.animator.IsInTransition(0) && Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            Debug.Log("onur buradsdas.dfçs.");
+        }
         if(currentNormalizedTime > 0.8)
         {
-            attackTimeLimit += Time.deltaTime; 
-            
+            attackTimeLimit += Time.deltaTime;
+
             
             if(attackTimeLimit < 0.5f)
             {
@@ -45,7 +50,7 @@ public class PlayerAttackState : PlayerBaseState
                     stateMachine.combatData.CurrentCombatIndex = 0;
                 } 
 
-                if(Mouse.current.leftButton.wasPressedThisFrame)
+                if(Mouse.current.leftButton.wasPressedThisFrame && Gamepad.current.buttonEast.wasPressedThisFrame)
                 {
                     Debug.Log("onur 4444");
                     stateMachine.SwitchState(new PlayerAttackState(stateMachine,playerMovement));
