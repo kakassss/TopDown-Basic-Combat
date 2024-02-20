@@ -29,22 +29,21 @@ public class PlayerMovement
         transform.transform.Translate(Vector3.forward * travellingValue * Time.deltaTime);
     }
 
-    public void AttackMovement(Transform pos,float travelValue)
+    public void AttackMovement(Transform pos,float travelValue,AnimationCurve curve)
     {
-        float time = 0f;
         Vector3 forward = pos.forward;
         forward.y = 0;
         forward.Normalize();
 
-        Vector3 targetPos = pos.position + forward;
-
-        while(time < 1f)
+        Vector3 targetPos = pos.position + (forward * travelValue);
+        float time = 0;
+        while (time < 1f)
         {
-            time += Time.deltaTime;
-            pos.transform.position = Vector3.MoveTowards(pos.transform.position,targetPos,Time.deltaTime);
-            pos.transform.position = Vector3.Lerp(pos.transform.position,targetPos,time);
-            //pos.transform.Translate(Vector3.forward * travelValue * Time.deltaTime);
+            pos.transform.position = Vector3.Lerp(pos.transform.position,targetPos,curve.Evaluate(Time.deltaTime));
+
+            time += Time.deltaTime * 5;
         }
+
     }
 }
 

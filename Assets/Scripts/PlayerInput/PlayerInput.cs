@@ -15,7 +15,7 @@ public class PlayerInput : MonoBehaviour,PlayerActions.IPlayerControlsActions
 
 
     public Vector3 movementVector;
-    private PlayerActions playerActions;
+    public PlayerActions playerActions;
 
 
     private void Start()
@@ -52,21 +52,16 @@ public class PlayerInput : MonoBehaviour,PlayerActions.IPlayerControlsActions
         }
     }
 
-    private int IsFire;
     public void OnFire(InputAction.CallbackContext context)
     {
-        //IsFire = context.ReadValue<int>();
-        Debug.Log("onur xfire "  + IsFire);
         if(context.performed)
         {
-            Debug.Log("onurxd1111");
             IsAttacking = true;
             OnAttackLeftInput?.Invoke();
         }
         if(context.canceled)
         {
-            Debug.Log("onurxd2222");
-            
+            IsAttacking = false;
         }
     }
     

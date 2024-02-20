@@ -2347,6 +2347,30 @@ MonoBehaviour:
   datas: {fileID: 11400000, guid: 9cc71c65033ba894cabaedca168e7992, type: 2}
   comboDatas: {fileID: 11400000, guid: 7218147236a4fd74f9f15d61fffad55e, type: 2}
   animator: {fileID: 919132148269383166}
+  her:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1966552876
 MonoBehaviour:
   m_ObjectHideFlags: 0

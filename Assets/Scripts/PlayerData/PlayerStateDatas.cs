@@ -39,5 +39,10 @@ public class PlayerAnimationClips
         return LeftClickCombatList[index].name;
     }
 
+    public List<AnimationClip> GetCombatAnimationData()
+    {
+        return LeftClickCombatList;
+    }
+
     
 }

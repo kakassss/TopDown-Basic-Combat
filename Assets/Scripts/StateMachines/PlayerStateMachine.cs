@@ -7,7 +7,7 @@ public class PlayerStateMachine : StateMachine
     [SerializeField] public PlayerAttackComboData comboDatas;
     public PlayerCombatData combatData;
     [SerializeField] public Animator animator;
-
+     public AnimationCurve her;
 
     protected PlayerMovement playerMovement;
     private void Start()
