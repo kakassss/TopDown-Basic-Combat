@@ -43,7 +43,7 @@ public class PlayerAttackState : PlayerBaseState
     public override void Tick(float deltaTime)
     {
         
-        
+        //ATTACK animasyonundan sonra 0.2-0.3 gibi bi aralıkda combo atağın devamını yapabilmeliyiz, şuan o düzgün değil
         //Debug.Log("onur current animation duration " + attackAnimationsDurations[stateMachine.combatData.CurrentCombatIndex]);
 
         attackTimeLimit += Time.deltaTime;
@@ -67,7 +67,9 @@ public class PlayerAttackState : PlayerBaseState
             if (nextComboBreak >= 0.3f)
             {
                 stateMachine.combatData.CurrentCombatIndex = 0;
-
+                
+                
+                //Combo bittikten sonra veya saldırmayı bıraktıktan sonra, eğer kullanıcı wasd basıyorsa movementState geçebilsin diye
                 if (stateMachine.PlayerInput.playerActions.PlayerControls.Movement.IsInProgress())
                 {
                     stateMachine.SwitchState(new PlayerMovementState(stateMachine,playerMovement));
