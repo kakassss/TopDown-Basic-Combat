@@ -32,17 +32,26 @@ public class PlayerAnimationClips
     public AnimationClip DodgeAnimation;
 
     [Header("Combat Anim Clips")]
-    [SerializeField] private List<AnimationClip> LeftClickCombatList;
+    [SerializeField] private List<CombatAnimationData> LeftClickCombatList;
 
     public string GetCurrentCombatAnimationName(int index)
     {
-        return LeftClickCombatList[index].name;
+        return LeftClickCombatList[index].animation.name;
     }
 
-    public List<AnimationClip> GetCombatAnimationData()
+    public List<CombatAnimationData> GetCombatAnimationData()
     {
         return LeftClickCombatList;
     }
 
     
+}
+
+[Serializable]
+public class CombatAnimationData
+{
+    public AnimationClip animation;
+    public float animationSpeed;
+
+    public float animationDurationOffset;
 }

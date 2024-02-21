@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerAttackState : PlayerBaseState
 {
-    private List<float> attacksAnimationTimes;
+    private List<float> attackAnimationsDurations;
     private float attack1AnimationTime;
     private float attack2AnimationTime;
 
@@ -16,13 +16,16 @@ public class PlayerAttackState : PlayerBaseState
     {
     }
 
-    private float currentNormalizedTime;
     public override void Enter()
     {
-        attacksAnimationTimes = new List<float>(new float[stateMachine.datas.animationClips.GetCombatAnimationData().Count]);
+        attackAnimationsDurations = new List<float>(new float[stateMachine.datas.animationClips.GetCombatAnimationData().Count]);
         SetAnimationDurationDatas();
-        Debug.Log("onur total anims" + attacksAnimationTimes.Count);
-        //attack2AnimationTime = stateMachine.datas.animationClips.Attack2Animation.averageDuration;
+        Debug.Log("onur total anims" + attackAnimationsDurations.Count);
+        
+        if(stateMachine.combatData.CurrentCombatIndex >= stateMachine.comboDatas.AttackComboNamesList.Count)
+        {
+            stateMachine.combatData.CurrentCombatIndex = 0;
+        }
         attackTimeLimit = 0;
         nextComboBreak = 0;
         
@@ -31,6 +34,7 @@ public class PlayerAttackState : PlayerBaseState
         stateMachine.animator.CrossFadeInFixedTime(
             stateMachine.datas.animationClips.GetCurrentCombatAnimationName(stateMachine.combatData.CurrentCombatIndex),
             0.5f);
+        
         stateMachine.combatData.CurrentCombatIndex++;
         Debug.Log("onur index " + stateMachine.combatData.CurrentCombatIndex);
         playerMovement.AttackMovement(stateMachine.transform,0.4f,stateMachine.her);
@@ -39,44 +43,53 @@ public class PlayerAttackState : PlayerBaseState
     public override void Tick(float deltaTime)
     {
         
-        if(stateMachine.combatData.CurrentCombatIndex >= stateMachine.comboDatas.AttackComboNamesList.Count)
-        {
-            stateMachine.combatData.CurrentCombatIndex = 0;
-        }
-        Debug.Log("onur current animation duration " + attacksAnimationTimes[stateMachine.combatData.CurrentCombatIndex]);
+        
+        //Debug.Log("onur current animation duration " + attackAnimationsDurations[stateMachine.combatData.CurrentCombatIndex]);
 
         attackTimeLimit += Time.deltaTime;
-        //attacksAnimationTimes[stateMachine.combatData.CurrentCombatIndex]
-        if(attackTimeLimit > 1) // animation duration a göre bi şeyler ata yukarda bi şeyler almaya çalıstın
+        var currentAnimation =
+            stateMachine.datas.animationClips.GetCombatAnimationData()[stateMachine.combatData.CurrentCombatIndex];
+        var currentAnimationNormalizeDuration =
+            (currentAnimation.animation.averageDuration / currentAnimation.animationSpeed) - currentAnimation.animationDurationOffset;
+        Debug.Log("onur index " + stateMachine.combatData.CurrentCombatIndex);
+        Debug.Log("onur currentAnimation duration " + currentAnimationNormalizeDuration);
+        
+        if(attackTimeLimit > currentAnimationNormalizeDuration) 
         {
             nextComboBreak += Time.deltaTime;
             
             if(stateMachine.PlayerInput.playerActions.PlayerControls.Fire.triggered) 
             {
+                Debug.Log("here");
                 stateMachine.SwitchState(new PlayerAttackState(stateMachine,playerMovement));
             }
             
             if (nextComboBreak >= 0.3f)
             {
-                stateMachine.combatData.CurrentCombatIndex = 0; 
-                stateMachine.SwitchState(new PlayerIdleState(stateMachine,playerMovement));
+                stateMachine.combatData.CurrentCombatIndex = 0;
+
+                if (stateMachine.PlayerInput.playerActions.PlayerControls.Movement.IsInProgress())
+                {
+                    stateMachine.SwitchState(new PlayerMovementState(stateMachine,playerMovement));
+                }
+                else
+                {
+                    stateMachine.SwitchState(new PlayerIdleState(stateMachine,playerMovement));
+                }
             }
         }
     }
 
     public override void Exit()
     {
-        
-        
         stateMachine.PlayerInput.OnDodgeInput -= OnDodge;
-        //stateMachine.SwitchState(new PlayerIdleState(stateMachine,playerMovement));
     }
     
     private void SetAnimationDurationDatas()
     {
-        for (int i = 0; i < attacksAnimationTimes.Count; i++)
+        for (int i = 0; i < attackAnimationsDurations.Count; i++)
         {
-            attacksAnimationTimes[i] = stateMachine.datas.animationClips.GetCombatAnimationData()[i].averageDuration;
+            attackAnimationsDurations[i] = stateMachine.datas.animationClips.GetCombatAnimationData()[i].animation.averageDuration;
         }
     }
     

@@ -19,6 +19,12 @@ MonoBehaviour:
   animationClips:
     DodgeAnimation: {fileID: 7400000, guid: 8adbdf4519df88542b19c41e8e0ae2f8, type: 2}
     LeftClickCombatList:
-    - {fileID: 7400000, guid: 0db67772bfa5cf2449a66da56330d1d4, type: 2}
-    - {fileID: 7400000, guid: 4a7af314543b6b04cbdcad188c058798, type: 2}
-    - {fileID: 7400000, guid: d1f0fc91935abd440bcbb99be23381f4, type: 2}
+    - animation: {fileID: 7400000, guid: 0db67772bfa5cf2449a66da56330d1d4, type: 2}
+      animationSpeed: 2
+      animationDurationOffset: 0.5
+    - animation: {fileID: 7400000, guid: 4a7af314543b6b04cbdcad188c058798, type: 2}
+      animationSpeed: 2
+      animationDurationOffset: 0.7
+    - animation: {fileID: 7400000, guid: d1f0fc91935abd440bcbb99be23381f4, type: 2}
+      animationSpeed: 2
+      animationDurationOffset: 0.1
