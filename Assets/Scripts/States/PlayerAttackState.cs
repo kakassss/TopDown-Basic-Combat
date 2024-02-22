@@ -24,7 +24,6 @@ public class PlayerAttackState : PlayerBaseState
         attackAnimationsDurations = new List<float>(new float[stateMachine.datas.animationClips.GetCombatAnimationData().Count]);
         SetAnimationDurationDatas();
         
-        Debug.Log("onur total anims" + attackAnimationsDurations.Count);
         
         attackTimeLimit = 0;
         nextComboBreak = 0;
@@ -47,17 +46,12 @@ public class PlayerAttackState : PlayerBaseState
         }
         
         
-        Debug.Log("onur index " + stateMachine.combatData.CurrentCombatIndex);
         playerMovement.AttackMovement(stateMachine.transform,0.4f,stateMachine.her);
     }
     
     public override void Tick(float deltaTime)
     {
-        //ATTACK animasyonundan sonra 0.2-0.3 gibi bi aralıkda combo atağın devamını yapabilmeliyiz, şuan o düzgün değil
         attackTimeLimit += Time.deltaTime;
-        
-        Debug.Log("onur index " + stateMachine.combatData.CurrentCombatIndex);
-        Debug.Log("onur currentAnimation duration " + currentAnimationNormalizeDuration);
         
         if(attackTimeLimit > currentAnimationNormalizeDuration) 
         {
@@ -76,13 +70,11 @@ public class PlayerAttackState : PlayerBaseState
                 stateMachine.SwitchState(new PlayerMovementState(stateMachine,playerMovement));
             }
             
-            
             nextComboBreak += Time.deltaTime;
             
             //Player can continue his combo after a while later(currently 0.5)
             if (nextComboBreak >= 0.5f)
             {
-                Debug.Log("here");
                 
                 stateMachine.combatData.CurrentCombatIndex = 0;
                 //After current combo finished, if player holds wasd or gamepad stick inputs, can walk
