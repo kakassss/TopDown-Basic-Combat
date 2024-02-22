@@ -21,10 +21,10 @@ MonoBehaviour:
     LeftClickCombatList:
     - animation: {fileID: 7400000, guid: 0db67772bfa5cf2449a66da56330d1d4, type: 2}
       animationSpeed: 2
-      animationDurationOffset: 0.5
+      animationDurationOffset: 0.45
     - animation: {fileID: 7400000, guid: 4a7af314543b6b04cbdcad188c058798, type: 2}
       animationSpeed: 2
-      animationDurationOffset: 0.7
+      animationDurationOffset: 0.35
     - animation: {fileID: 7400000, guid: d1f0fc91935abd440bcbb99be23381f4, type: 2}
       animationSpeed: 2
-      animationDurationOffset: 0.1
+      animationDurationOffset: 0.3
