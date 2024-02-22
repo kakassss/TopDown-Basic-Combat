@@ -19,15 +19,15 @@ public class PlayerAttackState : PlayerBaseState
     private float currentAnimationNormalizeDuration;
     public override void Enter()
     {
+        stateMachine.PlayerInput.OnDodgeInput += OnDodge;
+        
         attackAnimationsDurations = new List<float>(new float[stateMachine.datas.animationClips.GetCombatAnimationData().Count]);
         SetAnimationDurationDatas();
+        
         Debug.Log("onur total anims" + attackAnimationsDurations.Count);
         
-        
         attackTimeLimit = 0;
-        
-        
-        stateMachine.PlayerInput.OnDodgeInput += OnDodge;
+        nextComboBreak = 0;
         
         stateMachine.animator.CrossFadeInFixedTime(
             stateMachine.datas.animationClips.GetCurrentCombatAnimationName(stateMachine.combatData.CurrentCombatIndex),
@@ -38,7 +38,6 @@ public class PlayerAttackState : PlayerBaseState
         currentAnimationNormalizeDuration =
             (currentAnimation.animation.averageDuration / currentAnimation.animationSpeed) - currentAnimation.animationDurationOffset;
         
-        nextComboBreak = 0;
         
         stateMachine.combatData.CurrentCombatIndex++;
         
@@ -54,7 +53,6 @@ public class PlayerAttackState : PlayerBaseState
     
     public override void Tick(float deltaTime)
     {
-        
         //ATTACK animasyonundan sonra 0.2-0.3 gibi bi aralıkda combo atağın devamını yapabilmeliyiz, şuan o düzgün değil
         attackTimeLimit += Time.deltaTime;
         
@@ -63,19 +61,23 @@ public class PlayerAttackState : PlayerBaseState
         
         if(attackTimeLimit > currentAnimationNormalizeDuration) 
         {
-            nextComboBreak += Time.deltaTime;
-            
             //Make combo continue
             if(stateMachine.PlayerInput.playerActions.PlayerControls.Fire.triggered) 
             {
                 stateMachine.SwitchState(new PlayerAttackState(stateMachine,playerMovement));
             }
-            
+            else
+            {
+                stateMachine.animator.CrossFade(PlayerAnimationsNames.IdleAnim,0.1f);
+            }
             //After current combo animation played, if player does not want to continue combo walk instead
             if (stateMachine.PlayerInput.playerActions.PlayerControls.Movement.triggered)
             {
                 stateMachine.SwitchState(new PlayerMovementState(stateMachine,playerMovement));
             }
+            
+            
+            nextComboBreak += Time.deltaTime;
             
             //Player can continue his combo after a while later(currently 0.5)
             if (nextComboBreak >= 0.5f)
@@ -93,6 +95,8 @@ public class PlayerAttackState : PlayerBaseState
                     stateMachine.SwitchState(new PlayerIdleState(stateMachine,playerMovement));
                 }
             }
+            
+            
         }
     }
 
