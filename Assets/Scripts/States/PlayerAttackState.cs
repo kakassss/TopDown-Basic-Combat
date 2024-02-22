@@ -22,10 +22,7 @@ public class PlayerAttackState : PlayerBaseState
         SetAnimationDurationDatas();
         Debug.Log("onur total anims" + attackAnimationsDurations.Count);
         
-        if(stateMachine.combatData.CurrentCombatIndex >= stateMachine.comboDatas.AttackComboNamesList.Count)
-        {
-            stateMachine.combatData.CurrentCombatIndex = 0;
-        }
+        
         attackTimeLimit = 0;
         nextComboBreak = 0;
         
@@ -36,6 +33,11 @@ public class PlayerAttackState : PlayerBaseState
             0.5f);
         
         stateMachine.combatData.CurrentCombatIndex++;
+        
+        if(stateMachine.combatData.CurrentCombatIndex >= stateMachine.comboDatas.AttackComboNamesList.Count)
+        {
+            stateMachine.combatData.CurrentCombatIndex = 0;
+        }
         Debug.Log("onur index " + stateMachine.combatData.CurrentCombatIndex);
         playerMovement.AttackMovement(stateMachine.transform,0.4f,stateMachine.her);
     }
@@ -44,13 +46,15 @@ public class PlayerAttackState : PlayerBaseState
     {
         
         //ATTACK animasyonundan sonra 0.2-0.3 gibi bi aralıkda combo atağın devamını yapabilmeliyiz, şuan o düzgün değil
-        //Debug.Log("onur current animation duration " + attackAnimationsDurations[stateMachine.combatData.CurrentCombatIndex]);
-
         attackTimeLimit += Time.deltaTime;
+        
         var currentAnimation =
             stateMachine.datas.animationClips.GetCombatAnimationData()[stateMachine.combatData.CurrentCombatIndex];
         var currentAnimationNormalizeDuration =
             (currentAnimation.animation.averageDuration / currentAnimation.animationSpeed) - currentAnimation.animationDurationOffset;
+        
+        
+        
         Debug.Log("onur index " + stateMachine.combatData.CurrentCombatIndex);
         Debug.Log("onur currentAnimation duration " + currentAnimationNormalizeDuration);
         
@@ -60,15 +64,21 @@ public class PlayerAttackState : PlayerBaseState
             
             if(stateMachine.PlayerInput.playerActions.PlayerControls.Fire.triggered) 
             {
-                Debug.Log("here");
+                
+                //Debug.Log("here");
                 stateMachine.SwitchState(new PlayerAttackState(stateMachine,playerMovement));
             }
             
-            if (nextComboBreak >= 0.3f)
+            if (stateMachine.PlayerInput.playerActions.PlayerControls.Movement.triggered)
             {
+                stateMachine.SwitchState(new PlayerMovementState(stateMachine,playerMovement));
+            }
+            
+            if (nextComboBreak >= 0.5f)
+            {
+                Debug.Log("here");
+                
                 stateMachine.combatData.CurrentCombatIndex = 0;
-                
-                
                 //Combo bittikten sonra veya saldırmayı bıraktıktan sonra, eğer kullanıcı wasd basıyorsa movementState geçebilsin diye
                 if (stateMachine.PlayerInput.playerActions.PlayerControls.Movement.IsInProgress())
                 {
