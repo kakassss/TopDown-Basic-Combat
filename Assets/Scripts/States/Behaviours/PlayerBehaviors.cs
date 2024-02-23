@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerBehaviors
@@ -6,7 +7,7 @@ public class PlayerBehaviors
 }
 
 public class PlayerMovement
-{
+{ 
     public void Movement(float deltaTime,PlayerStateMachine stateMachine, float movement)
     {
         //Vector3 zRelativeVectorX = movementVector.x * transform.right;
@@ -29,21 +30,28 @@ public class PlayerMovement
         transform.transform.Translate(Vector3.forward * travellingValue * Time.deltaTime);
     }
 
-    public void AttackMovement(Transform pos,float travelValue,AnimationCurve curve)
+
+    #region AttackMovement
+    
+    private Vector3 forward;
+    private Vector3 targetPos;
+    
+    public void SetAttackMovementData(Transform pos,float travelValue,AnimationCurve curve)
     {
-        Vector3 forward = pos.forward;
+        forward = pos.forward;
         forward.y = 0;
         forward.Normalize();
 
-        Vector3 targetPos = pos.position + (forward * travelValue);
-        float time = 0;
-        while (time < 1f)
-        {
-            pos.transform.position = Vector3.Lerp(pos.transform.position,targetPos,curve.Evaluate(Time.deltaTime));
-
-            time += Time.deltaTime * 5;
-        }
-
+        targetPos = pos.position + (forward * travelValue);
+        //pos.transform.position = Vector3.MoveTowards(pos.transform.position, targetPos, Time.deltaTime);
     }
+
+    public void AttackMovement(Transform pos)
+    {
+        pos.transform.position = Vector3.MoveTowards(pos.transform.position, targetPos, Time.deltaTime);
+    }
+    
+    #endregion
+    
 }
 

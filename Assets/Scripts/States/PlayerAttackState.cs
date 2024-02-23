@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerAttackState : PlayerBaseState
 {
@@ -49,26 +49,18 @@ public class PlayerAttackState : PlayerBaseState
             stateMachine.combatData.CurrentCombatIndex = 0;
         }
         
-        playerMovement.AttackMovement(stateMachine.transform,0.4f,stateMachine.her);
+        playerMovement.SetAttackMovementData(stateMachine.transform,0.3f,stateMachine.her);
     }
     
     public override void Tick(float deltaTime)
     {
         attackTimeLimit += Time.deltaTime;
-        
-        if(attackTimeLimit > currentAnimationNormalizeDuration) 
+        playerMovement.AttackMovement(stateMachine.transform);
+        if(attackTimeLimit > currentAnimationNormalizeDuration)
         {
-            //Make combo continue
-            if(stateMachine.PlayerInput.playerActions.PlayerControls.Fire.triggered) 
-            {
-                stateMachine.SwitchState(new PlayerAttackState(stateMachine,playerMovement));
-            }
-            //If there will be no combo input, change current animation to idle. The reason why is that not IdleState, so if current
-            // state chaged to idle there is no back to other lines.
-            else
-            {
-                stateMachine.animator.CrossFade(PlayerAnimationsNames.IdleAnim,0.1f);
-            }
+
+            ComboContinues();
+            
             //After current combo animation played, if player does not want to continue combo walk instead
             if (stateMachine.PlayerInput.playerActions.PlayerControls.Movement.triggered)
             {
@@ -100,6 +92,21 @@ public class PlayerAttackState : PlayerBaseState
     public override void Exit()
     {
         stateMachine.PlayerInput.OnDodgeInput -= OnDodge;
+    }
+
+    private void ComboContinues()
+    {
+        //Make combo continue
+        if(stateMachine.PlayerInput.playerActions.PlayerControls.Fire.triggered) 
+        {
+            stateMachine.SwitchState(new PlayerAttackState(stateMachine,playerMovement));
+        }
+        //If there will be no combo input, change current animation to idle. The reason why is that not IdleState, so if current
+        // state chaged to idle there is no back to other lines.
+        else
+        {
+            stateMachine.animator.CrossFade(PlayerAnimationsNames.IdleAnim,0.1f);
+        }
     }
     
     private void SetAnimationDurationDatas()
