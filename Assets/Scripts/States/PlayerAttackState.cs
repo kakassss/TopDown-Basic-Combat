@@ -56,6 +56,7 @@ public class PlayerAttackState : PlayerBaseState
     {
         attackTimeLimit += Time.deltaTime;
         playerMovement.AttackMovement(stateMachine.transform);
+        
         if(attackTimeLimit > currentAnimationNormalizeDuration)
         {
 
@@ -65,6 +66,7 @@ public class PlayerAttackState : PlayerBaseState
             if (stateMachine.PlayerInput.playerActions.PlayerControls.Movement.triggered)
             {
                 stateMachine.SwitchState(new PlayerMovementState(stateMachine,playerMovement));
+                stateMachine.combatData.CurrentCombatIndex = 0;
             }
             
             nextComboBreak += Time.deltaTime;
