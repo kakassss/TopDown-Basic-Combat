@@ -36,18 +36,18 @@ public class PlayerMovement
     private Vector3 forward;
     private Vector3 targetPos;
     
-    public void SetAttackMovementData(Transform pos,float travelValue,AnimationCurve curve)
+    public void SetAttackMovementData(Transform pos,float travelValue)
     {
         forward = pos.forward;
         forward.y = 0;
         forward.Normalize();
 
         targetPos = pos.position + (forward * travelValue);
-        //pos.transform.position = Vector3.MoveTowards(pos.transform.position, targetPos, Time.deltaTime);
     }
 
-    public void AttackMovement(Transform pos)
+    public void AttackMovement(Transform pos) // TODO: maybe use AnimationCurve curve instead of time.deltaTime
     {
+        //TODO: you can try vector3.smoothdamp or lerp functions insted of moveTowards
         pos.transform.position = Vector3.MoveTowards(pos.transform.position, targetPos, Time.deltaTime);
     }
     

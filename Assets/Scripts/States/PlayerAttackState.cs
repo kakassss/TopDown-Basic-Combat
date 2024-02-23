@@ -49,7 +49,7 @@ public class PlayerAttackState : PlayerBaseState
             stateMachine.combatData.CurrentCombatIndex = 0;
         }
         
-        playerMovement.SetAttackMovementData(stateMachine.transform,0.3f,stateMachine.her);
+        playerMovement.SetAttackMovementData(stateMachine.transform,0.3f);
     }
     
     public override void Tick(float deltaTime)
