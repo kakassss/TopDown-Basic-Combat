@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class StateMachine : MonoBehaviour
 {
     private State currentState;
     private State helperState;
+    
     public void SwitchState(State newState)
     {
         currentState?.Exit();
@@ -19,8 +18,7 @@ public abstract class StateMachine : MonoBehaviour
         helperState = newHelperState;
         helperState?.Enter();
     }
-
-
+    
     private void Update()
     {
         currentState?.Tick(Time.deltaTime);
