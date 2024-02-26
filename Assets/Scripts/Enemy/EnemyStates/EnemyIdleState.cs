@@ -13,7 +13,7 @@ public class EnemyIdleState : EnemyBaseState
 
     public override void Tick(float deltaTime)
     {
-        
+        IsPlayerInRange(StateMachine.transform);
     }
 
     public override void Exit()
