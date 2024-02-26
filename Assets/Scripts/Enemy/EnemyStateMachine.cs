@@ -7,20 +7,24 @@ public class EnemyStateMachine : StateMachine
 {
     public NavMeshAgent Agent;
     public Animator Animator;
-    public GameObject Player;
+    [HideInInspector] public GameObject Player;
 
     public float MovementSpeed;
+    public float RotateSpeed;
     
-    [FormerlySerializedAs("PlayerChaseDistance")] public float PlayerChaseRange;
+    public float PlayerChaseRange;
+
+    private EnemyMovement enemyMovement;
     
     private void Start()
     {
+        enemyMovement = new EnemyMovement();
         Player = GameObject.FindGameObjectWithTag("Player");
 
         Agent.updatePosition = false;
         Agent.updateRotation = false;
         
-        SwitchState(new EnemyIdleState(this));
+        SwitchState(new EnemyIdleState(this,enemyMovement));
     }
 
 

@@ -6,33 +6,38 @@ public class EnemyChasingState : EnemyBaseState
 {
     private float dampTime = 0.1f;
     
-    public EnemyChasingState(EnemyStateMachine enemyStateMachine) : base(enemyStateMachine)
+    public EnemyChasingState(EnemyStateMachine enemyStateMachine, EnemyMovement enemyMovement) : base(enemyStateMachine,enemyMovement)
     {
     }
 
     public override void Enter()
     {
-        StateMachine.Animator.SetFloat("Blend", 0.1f);
+        stateMachine.Animator.SetFloat("Blend", 0.1f);
         //StateMachine.Animator.CrossFadeInFixedTime(EnemyAnimationsNames.RunAnim,0.1f);
     }
 
     public override void Tick(float deltaTime)
     {
-        
-        StateMachine.Animator.SetFloat("Blend", 1,dampTime,deltaTime);
-        if (IsPlayerInRange(StateMachine.transform) == false)
+        MovementToPlayer(deltaTime);
+        stateMachine.Animator.SetFloat("Blend", 1,dampTime,deltaTime);
+        if (IsPlayerInRange(stateMachine.transform) == false)
         {
-            StateMachine.SwitchState(new EnemyIdleState(StateMachine));
+            stateMachine.SwitchState(new EnemyIdleState(stateMachine,enemyMovement));
         }
     }
 
     public override void Exit()
     {
-       
+       stateMachine.Agent.ResetPath();
+       stateMachine.Agent.velocity = Vector3.zero;
     }
 
-    private void MoveToPlayer()
+    private void MovementToPlayer(float deltaTime)
     {
+        stateMachine.Agent.destination = stateMachine.Player.transform.position;
+        
+        enemyMovement.Movement(stateMachine,deltaTime,stateMachine.MovementSpeed);
+        enemyMovement.Rotate(stateMachine,deltaTime,stateMachine.RotateSpeed);
         
     }
 }

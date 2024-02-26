@@ -2,22 +2,21 @@
 public class EnemyIdleState : EnemyBaseState
 {
     
-    public EnemyIdleState(EnemyStateMachine enemyStateMachine) : base(enemyStateMachine)
+    public EnemyIdleState(EnemyStateMachine enemyStateMachine, EnemyMovement enemyMovement) : base(enemyStateMachine,enemyMovement)
     {
     }
 
     public override void Enter()
     {
-        StateMachine.Animator.SetFloat("Blend", 0);
         //StateMachine.Animator.CrossFadeInFixedTime(EnemyAnimationsNames.IdleAnim,0.1f);
     }
 
     public override void Tick(float deltaTime)
     {
-        StateMachine.Animator.SetFloat("Blend", 0,0.1f,deltaTime);
-        if (IsPlayerInRange(StateMachine.transform))
+        stateMachine.Animator.SetFloat("Blend", 0,0.1f,deltaTime);
+        if (IsPlayerInRange(stateMachine.transform))
         {
-            StateMachine.SwitchState(new EnemyChasingState(StateMachine));
+            stateMachine.SwitchState(new EnemyChasingState(stateMachine,enemyMovement));
         }
     }
 

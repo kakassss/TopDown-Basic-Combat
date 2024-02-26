@@ -2200,8 +2200,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82c0c05a2bcfa44bb2d075568bc4bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Agent: {fileID: 6764568940498300718}
   Animator: {fileID: 2534648608994941416}
   Player: {fileID: 0}
+  MovementSpeed: 1
+  RotateSpeed: 5
   PlayerChaseRange: 5
 --- !u!195 &6764568940498300718
 NavMeshAgent:
@@ -2217,7 +2220,7 @@ NavMeshAgent:
   m_Acceleration: 0
   avoidancePriority: 50
   m_AngularSpeed: 0
-  m_StoppingDistance: 1
+  m_StoppingDistance: 5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
