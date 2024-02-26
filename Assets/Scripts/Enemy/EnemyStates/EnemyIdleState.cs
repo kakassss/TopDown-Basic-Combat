@@ -8,12 +8,13 @@ public class EnemyIdleState : EnemyBaseState
 
     public override void Enter()
     {
-        //StateMachine.Animator.CrossFadeInFixedTime(EnemyAnimationsNames.IdleAnim,0.1f);
+        
     }
 
     public override void Tick(float deltaTime)
     {
         stateMachine.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 0,0.1f,deltaTime);
+        
         if (IsPlayerInRange(stateMachine.transform))
         {
             stateMachine.SwitchState(new EnemyChasingState(stateMachine,enemyMovement));
