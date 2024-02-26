@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyChasingState : EnemyBaseState
 {
-    private float blendRunSpeed = 0.1f;
+    private float dampTime = 0.1f;
     
     public EnemyChasingState(EnemyStateMachine enemyStateMachine) : base(enemyStateMachine)
     {
@@ -12,17 +12,14 @@ public class EnemyChasingState : EnemyBaseState
 
     public override void Enter()
     {
-        StateMachine.Animator.SetFloat("Blend", blendRunSpeed);
+        StateMachine.Animator.SetFloat("Blend", 0.1f);
         //StateMachine.Animator.CrossFadeInFixedTime(EnemyAnimationsNames.RunAnim,0.1f);
     }
 
     public override void Tick(float deltaTime)
     {
-        blendRunSpeed += Time.deltaTime;
-        blendRunSpeed = Mathf.Clamp(blendRunSpeed, blendRunSpeed, 1);
         
-        
-        StateMachine.Animator.SetFloat("Blend", blendRunSpeed);
+        StateMachine.Animator.SetFloat("Blend", 1,dampTime,deltaTime);
         if (IsPlayerInRange(StateMachine.transform) == false)
         {
             StateMachine.SwitchState(new EnemyIdleState(StateMachine));
@@ -32,5 +29,10 @@ public class EnemyChasingState : EnemyBaseState
     public override void Exit()
     {
        
+    }
+
+    private void MoveToPlayer()
+    {
+        
     }
 }

@@ -14,7 +14,7 @@ public class EnemyIdleState : EnemyBaseState
 
     public override void Tick(float deltaTime)
     {
-        
+        StateMachine.Animator.SetFloat("Blend", 0,0.1f,deltaTime);
         if (IsPlayerInRange(StateMachine.transform))
         {
             StateMachine.SwitchState(new EnemyChasingState(StateMachine));
