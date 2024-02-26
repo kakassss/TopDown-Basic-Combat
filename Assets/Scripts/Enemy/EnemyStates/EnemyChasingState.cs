@@ -12,14 +12,13 @@ public class EnemyChasingState : EnemyBaseState
 
     public override void Enter()
     {
-        stateMachine.Animator.SetFloat("Blend", 0.1f);
-        //StateMachine.Animator.CrossFadeInFixedTime(EnemyAnimationsNames.RunAnim,0.1f);
+        stateMachine.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 0.1f);
     }
 
     public override void Tick(float deltaTime)
     {
         MovementToPlayer(deltaTime);
-        stateMachine.Animator.SetFloat("Blend", 1,dampTime,deltaTime);
+        stateMachine.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 1,dampTime,deltaTime);
         if (IsPlayerInRange(stateMachine.transform) == false)
         {
             stateMachine.SwitchState(new EnemyIdleState(stateMachine,enemyMovement));

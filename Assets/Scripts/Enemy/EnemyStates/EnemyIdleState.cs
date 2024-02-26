@@ -13,7 +13,7 @@ public class EnemyIdleState : EnemyBaseState
 
     public override void Tick(float deltaTime)
     {
-        stateMachine.Animator.SetFloat("Blend", 0,0.1f,deltaTime);
+        stateMachine.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 0,0.1f,deltaTime);
         if (IsPlayerInRange(stateMachine.transform))
         {
             stateMachine.SwitchState(new EnemyChasingState(stateMachine,enemyMovement));
