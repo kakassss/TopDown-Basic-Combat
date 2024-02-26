@@ -10,14 +10,9 @@ public abstract class EnemyBaseState : State
         StateMachine = enemyStateMachine;
     }
 
-    protected void IsPlayerInRange(Transform transform)
+    protected bool IsPlayerInRange(Transform transform)
     {
-        Vector3 distanceVector = transform.position - StateMachine.Player.transform.position;
-        var distance = distanceVector.magnitude;
-
-        if (distance <= StateMachine.PlayerChaseRange)
-        {
-            Debug.LogError("can chase player");
-        }
+        float distance = (transform.position - StateMachine.Player.transform.position).magnitude;
+        return distance <= StateMachine.PlayerChaseRange;
     }
 }

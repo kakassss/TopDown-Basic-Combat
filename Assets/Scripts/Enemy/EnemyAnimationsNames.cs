@@ -4,5 +4,6 @@ using UnityEngine;
 
 public static class EnemyAnimationsNames 
 {
-    public static string IdleAnim = "Idle";
+    public const string IdleAnim = "Idle";
+    public const string RunAnim = "Run";
 }
