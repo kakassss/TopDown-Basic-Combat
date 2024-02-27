@@ -1,42 +1,43 @@
-
-using System;
 using UnityEngine;
 
-public class EnemyChasingState : EnemyBaseState
+namespace Enemy.EnemyStates
 {
-    private float dampTime = 0.1f;
+    public class EnemyChasingState : EnemyBaseState
+    {
+        private float dampTime = 0.1f;
     
-    public EnemyChasingState(EnemyStateMachine enemyStateMachine, EnemyMovement enemyMovement) : base(enemyStateMachine,enemyMovement)
-    {
-    }
-
-    public override void Enter()
-    {
-        stateMachine.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 0.1f);
-    }
-
-    public override void Tick(float deltaTime)
-    {
-        MovementToPlayer(deltaTime);
-        stateMachine.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 1,dampTime,deltaTime);
-        if (IsPlayerInRange(stateMachine.transform) == false)
+        public EnemyChasingState(EnemyStateMachine enemyStateMachine, EnemyMovement enemyMovement) : base(enemyStateMachine,enemyMovement)
         {
-            stateMachine.SwitchState(new EnemyIdleState(stateMachine,enemyMovement));
         }
-    }
 
-    public override void Exit()
-    {
-       stateMachine.Agent.ResetPath();
-       stateMachine.Agent.velocity = Vector3.zero;
-    }
+        public override void Enter()
+        {
+            stateMachine.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 0.1f);
+        }
 
-    private void MovementToPlayer(float deltaTime)
-    {
-        stateMachine.Agent.destination = stateMachine.Player.transform.position;
+        public override void Tick(float deltaTime)
+        {
+            MovementToPlayer(deltaTime);
+            stateMachine.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 1,dampTime,deltaTime);
+            if (IsPlayerInRange(stateMachine.transform) == false)
+            {
+                stateMachine.SwitchState(new EnemyIdleState(stateMachine,enemyMovement));
+            }
+        }
+
+        public override void Exit()
+        {
+            stateMachine.Agent.ResetPath();
+            stateMachine.Agent.velocity = Vector3.zero;
+        }
+
+        private void MovementToPlayer(float deltaTime)
+        {
+            stateMachine.Agent.destination = stateMachine.Player.transform.position;
         
-        enemyMovement.Movement(stateMachine,deltaTime,stateMachine.MovementSpeed);
-        enemyMovement.Rotate(stateMachine,deltaTime,stateMachine.RotateSpeed);
+            enemyMovement.Movement(stateMachine,deltaTime,stateMachine.MovementSpeed);
+            enemyMovement.Rotate(stateMachine,deltaTime,stateMachine.RotateSpeed);
         
+        }
     }
 }

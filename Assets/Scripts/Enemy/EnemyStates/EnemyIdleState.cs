@@ -1,28 +1,31 @@
 
-public class EnemyIdleState : EnemyBaseState
+namespace Enemy.EnemyStates
 {
+    public class EnemyIdleState : EnemyBaseState
+    {
     
-    public EnemyIdleState(EnemyStateMachine enemyStateMachine, EnemyMovement enemyMovement) : base(enemyStateMachine,enemyMovement)
-    {
-    }
-
-    public override void Enter()
-    {
-        
-    }
-
-    public override void Tick(float deltaTime)
-    {
-        stateMachine.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 0,0.1f,deltaTime);
-        
-        if (IsPlayerInRange(stateMachine.transform))
+        public EnemyIdleState(EnemyStateMachine enemyStateMachine, EnemyMovement enemyMovement) : base(enemyStateMachine,enemyMovement)
         {
-            stateMachine.SwitchState(new EnemyChasingState(stateMachine,enemyMovement));
         }
-    }
 
-    public override void Exit()
-    {
+        public override void Enter()
+        {
         
+        }
+
+        public override void Tick(float deltaTime)
+        {
+            stateMachine.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 0,0.1f,deltaTime);
+        
+            if (IsPlayerInRange(stateMachine.transform))
+            {
+                stateMachine.SwitchState(new EnemyChasingState(stateMachine,enemyMovement));
+            }
+        }
+
+        public override void Exit()
+        {
+        
+        }
     }
 }

@@ -1,4 +1,5 @@
 
+using Enemy;
 using UnityEngine;
 
 public abstract class EnemyBaseState : State
