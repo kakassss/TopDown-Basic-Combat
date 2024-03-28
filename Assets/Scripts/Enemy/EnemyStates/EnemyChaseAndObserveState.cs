@@ -23,7 +23,7 @@ namespace Enemy.EnemyStates
 
         public override void Tick(float deltaTime)
         {
-
+            //TODO: can we get rid of these if blocks?
             if (GetDistanceToPlayer(StateMachine.transform) <= 6f && GetDistanceToPlayer(StateMachine.transform) >= StateMachine.PlayerChaseRange)
             {
                 Animation(0f);
