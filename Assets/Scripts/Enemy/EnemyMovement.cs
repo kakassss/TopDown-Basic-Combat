@@ -27,7 +27,6 @@ namespace Enemy
             stateMachine.transform.rotation = 
                 Quaternion.Slerp(stateMachine.transform.rotation,rotationToRotate ,rotateSpeed * deltaTime);
         }
-    
-    
+        
     }
 }

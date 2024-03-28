@@ -15,11 +15,15 @@ namespace Enemy.EnemyStates
 
         public override void Tick(float deltaTime)
         {
-            stateMachine.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 0,0.1f,deltaTime);
+            StateMachine.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 0,0.1f,deltaTime);
         
-            if (IsPlayerInRange(stateMachine.transform))
+            if (IsPlayerXRange(StateMachine.PlayerChaseRange))
             {
-                stateMachine.SwitchState(new EnemyChasingState(stateMachine,enemyMovement));
+                StateMachine.SwitchState(new EnemyChasingState(StateMachine,EnemyMovement));
+            }
+            else if (IsPlayerXRange(StateMachine.PlayerObserveRange))
+            {
+                StateMachine.SwitchState(new EnemyChaseAndObserveState(StateMachine,EnemyMovement));
             }
         }
 

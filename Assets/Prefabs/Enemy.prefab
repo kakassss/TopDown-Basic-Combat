@@ -2206,6 +2206,7 @@ MonoBehaviour:
   MovementSpeed: 1
   RotateSpeed: 5
   PlayerChaseRange: 5
+  PlayerObserveRange: 10
 --- !u!195 &6764568940498300718
 NavMeshAgent:
   m_ObjectHideFlags: 0
