@@ -1,34 +1,37 @@
 using UnityEngine;
 
-public abstract class StateMachine : MonoBehaviour
+namespace StateMachines
 {
-    private State currentState;
-    private State helperState;
+    public abstract class StateMachine : MonoBehaviour
+    {
+        private State _currentState;
+        private State _helperState;
     
-    public void SwitchState(State newState)
-    {
-        currentState?.Exit();
-        currentState = newState;
-        currentState?.Enter();
-    }
+        public void SwitchState(State newState)
+        {
+            _currentState?.Exit();
+            _currentState = newState;
+            _currentState?.Enter();
+        }
 
-    public void SwichHelperState(State newHelperState)
-    {
-        helperState?.Exit();
-        helperState = newHelperState;
-        helperState?.Enter();
-    }
+        public void SwichHelperState(State newHelperState)
+        {
+            _helperState?.Exit();
+            _helperState = newHelperState;
+            _helperState?.Enter();
+        }
     
-    private void Update()
-    {
-        currentState?.Tick(Time.deltaTime);
-        helperState?.Tick(Time.deltaTime);
+        private void Update()
+        {
+            _currentState?.Tick(Time.deltaTime);
+            _helperState?.Tick(Time.deltaTime);
 
-        DebugCurrentState();
-    }
+            DebugCurrentState();
+        }
 
-    private void DebugCurrentState()
-    {
-        Debug.Log("Current state is " + currentState);
+        private void DebugCurrentState()
+        {
+            Debug.Log("Current state is " + _currentState);
+        }
     }
 }
