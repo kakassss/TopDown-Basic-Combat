@@ -4,32 +4,38 @@ namespace Enemy
 {
     public abstract class EnemyBaseState : State
     {
-        protected readonly EnemyStateMachine StateMachine;
+        protected readonly EnemyStateMachine EnemyStateMachine;
         protected readonly EnemyMovement EnemyMovement;
 
-        protected EnemyBaseState(EnemyStateMachine enemyStateMachine,EnemyMovement enemyMovement)
+        protected EnemyBaseState(EnemyStateMachine enemyEnemyStateMachine,EnemyMovement enemyMovement)
         {
-            StateMachine = enemyStateMachine;
+            EnemyStateMachine = enemyEnemyStateMachine;
             EnemyMovement = enemyMovement;
         }
 
-        protected bool IsPlayerXRange(float range)
+        protected bool IsPlayerInXRange(float range)
         {
-            var distance = (StateMachine.transform.position - StateMachine.Player.transform.position).magnitude;
+            var distance = (EnemyStateMachine.transform.position - EnemyStateMachine.EnemyData.Player.transform.position).magnitude;
             return distance <= range;
         }
 
-        protected float GetDistanceToPlayer(Transform playerTransform)
+        protected float GetDistanceValueToPlayer(Transform currentEnemyTransform)
         {
-            return (playerTransform.position - StateMachine.Player.transform.position).magnitude;
+            return (currentEnemyTransform.position - EnemyStateMachine.EnemyData.Player.transform.position).magnitude;
+        }
+
+        protected float GetTargetDistanceValue(Transform targetTransform)
+        {
+            //TargetPos - currentEnemy Position
+            return (targetTransform.position - EnemyStateMachine.transform.position).magnitude;
         }
     
-        protected void MovementToPlayer(float deltaTime)
+        protected void MovementToPlayer(float deltaTime,float movementSpeedReducer = 1f)
         {
-            StateMachine.Agent.destination = StateMachine.Player.transform.position;
+            EnemyStateMachine.EnemyData.Agent.destination = EnemyStateMachine.EnemyData.Player.transform.position;
         
-            EnemyMovement.Movement(StateMachine,deltaTime,StateMachine.MovementSpeed / 2);
-            EnemyMovement.Rotate(StateMachine,deltaTime,StateMachine.RotateSpeed);
+            EnemyMovement.Movement(EnemyStateMachine,deltaTime,EnemyStateMachine.EnemyData.MovementSpeed / movementSpeedReducer);
+            EnemyMovement.Rotate(EnemyStateMachine,deltaTime,EnemyStateMachine.EnemyData.RotateSpeed);
         
         }
     }

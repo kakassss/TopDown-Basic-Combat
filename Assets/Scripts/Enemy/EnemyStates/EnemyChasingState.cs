@@ -12,24 +12,24 @@ namespace Enemy.EnemyStates
 
         public override void Enter()
         {
-            StateMachine.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 0.1f);
+            EnemyStateMachine.EnemyData.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 0.1f);
         }
 
         public override void Tick(float deltaTime)
         {
             MovementToPlayer(deltaTime);
             
-            StateMachine.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 1,dampTime,deltaTime);
-            if (IsPlayerXRange(StateMachine.PlayerChaseRange) == false)
+            EnemyStateMachine.EnemyData.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 1,dampTime,deltaTime);
+            if (IsPlayerInXRange(EnemyStateMachine.EnemyData.PlayerChaseRange) == false)
             {
-                StateMachine.SwitchState(new EnemyIdleState(StateMachine,EnemyMovement));
+                EnemyStateMachine.SwitchState(new EnemyIdleState(EnemyStateMachine,EnemyMovement));
             }
         }
 
         public override void Exit()
         {
-            StateMachine.Agent.ResetPath();
-            StateMachine.Agent.velocity = Vector3.zero;
+            EnemyStateMachine.EnemyData.Agent.ResetPath();
+            EnemyStateMachine.EnemyData.Agent.velocity = Vector3.zero;
         }
     }
 }

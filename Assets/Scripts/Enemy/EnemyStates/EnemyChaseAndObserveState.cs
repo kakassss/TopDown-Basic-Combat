@@ -11,50 +11,52 @@ namespace Enemy.EnemyStates
         private CancellationToken _returnStartPositionToken;
 
         private float _waitDuration;
-        public EnemyChaseAndObserveState(EnemyStateMachine enemyStateMachine, EnemyMovement enemyMovement) : base(enemyStateMachine, enemyMovement)
+        public EnemyChaseAndObserveState(EnemyStateMachine enemyEnemyStateMachine, EnemyMovement enemyMovement) : base(enemyEnemyStateMachine, enemyMovement)
         {
         }
         
         public override void Enter()
         {
+            Debug.Log("reel onur 2 " + EnemyStateMachine.EnemyData.EnemyInitPosition.position);
             _waitDuration = 0;
-            StateMachine.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 0.1f);
+            EnemyStateMachine.EnemyData.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 0.1f);
         }
 
         public override void Tick(float deltaTime)
         {
             //TODO: can we get rid of these if blocks?
-            if (GetDistanceToPlayer(StateMachine.transform) <= 6f && GetDistanceToPlayer(StateMachine.transform) >= StateMachine.PlayerChaseRange)
+            if (GetDistanceValueToPlayer(EnemyStateMachine.transform) <= 6f 
+                && GetDistanceValueToPlayer(EnemyStateMachine.transform) >= EnemyStateMachine.EnemyData.PlayerChaseRange)
             {
                 Animation(0f);
                 _waitDuration += deltaTime;
                 WaitAndReturnStartPosition(_waitDuration);
             }
-            else if (IsPlayerXRange(StateMachine.PlayerChaseRange))
+            else if (IsPlayerInXRange(EnemyStateMachine.EnemyData.PlayerChaseRange))
             {
-                StateMachine.SwitchState(new EnemyChasingState(StateMachine,EnemyMovement));
+                EnemyStateMachine.SwitchState(new EnemyChasingState(EnemyStateMachine,EnemyMovement));
             }
-            else if (IsPlayerXRange(StateMachine.PlayerObserveRange))
+            else if (IsPlayerInXRange(EnemyStateMachine.EnemyData.PlayerObserveRange))
             {
-                MovementToPlayer(deltaTime);
+                MovementToPlayer(deltaTime,1.6f);
                 Animation(0.5f);
             }
             else
             {
-                StateMachine.SwitchState(new EnemyIdleState(StateMachine,EnemyMovement));    
+                EnemyStateMachine.SwitchState(new EnemyIdleState(EnemyStateMachine,EnemyMovement));    
             }
             
             void Animation(float value)
             {
-                StateMachine.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, value,DampTime,deltaTime);
+                EnemyStateMachine.EnemyData.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, value,DampTime,deltaTime);
             }
         }
 
-        private  void WaitAndReturnStartPosition(float deltaTime)
+        private void WaitAndReturnStartPosition(float deltaTime)
         {
             if (deltaTime >= 2f)
             {
-                StateMachine.SwitchState(new EnemyReturnStartPositionState(StateMachine,EnemyMovement));
+                EnemyStateMachine.SwitchState(new EnemyReturnStartPositionState(EnemyStateMachine,EnemyMovement));
             }
         }
         

@@ -411,6 +411,37 @@ Transform:
   - {fileID: 440373926883744053}
   m_Father: {fileID: 8002672967778899964}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1527855334558406987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7635368633901597238}
+  m_Layer: 0
+  m_Name: InitPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7635368633901597238
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1527855334558406987}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6667786124516552252}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1639652196640948941
 GameObject:
   m_ObjectHideFlags: 0
@@ -2129,6 +2160,7 @@ GameObject:
   - component: {fileID: 5504486530504801643}
   - component: {fileID: 4879277889418919515}
   - component: {fileID: 6764568940498300718}
+  - component: {fileID: 5669346340321081353}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -2150,6 +2182,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1052052139008466682}
+  - {fileID: 7635368633901597238}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3220585611355433540
@@ -2200,13 +2233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82c0c05a2bcfa44bb2d075568bc4bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Agent: {fileID: 6764568940498300718}
-  Animator: {fileID: 2534648608994941416}
-  Player: {fileID: 0}
-  MovementSpeed: 1
-  RotateSpeed: 5
-  PlayerChaseRange: 5
-  PlayerObserveRange: 10
+  EnemyData: {fileID: 5669346340321081353}
 --- !u!195 &6764568940498300718
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2229,6 +2256,26 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &5669346340321081353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7609801184512372203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75691be825fe85342b23407684e8b8e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Agent: {fileID: 6764568940498300718}
+  Animator: {fileID: 2534648608994941416}
+  MovementSpeed: 5
+  RotateSpeed: 5
+  PlayerChaseRange: 5
+  PlayerObserveRange: 10
+  Player: {fileID: 0}
+  EnemyInitPosition: {fileID: 0}
 --- !u!1 &7775827952490886237
 GameObject:
   m_ObjectHideFlags: 0
