@@ -19,7 +19,7 @@ namespace Enemy.EnemyStates
         {
             Debug.Log("reel onur 2 " + EnemyStateMachine.EnemyData.EnemyInitPosition);
             _waitDuration = 0;
-            EnemyStateMachine.EnemyData.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 0.1f);
+            Animation_IdleRunBlend(0.1f,0);
         }
 
         public override void Tick(float deltaTime)

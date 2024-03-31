@@ -12,14 +12,14 @@ namespace Enemy.EnemyStates
 
         public override void Enter()
         {
-            EnemyStateMachine.EnemyData.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 0.1f);
+            Animation_IdleRunBlend(0.1f,0);
         }
 
         public override void Tick(float deltaTime)
         {
             MovementAndRotateToPlayer(deltaTime);
             
-            EnemyStateMachine.EnemyData.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 1,dampTime,deltaTime);
+            Animation_IdleRunBlend(1,deltaTime);
             if (IsPlayerInXRange(EnemyStateMachine.EnemyData.PlayerChaseRange) == false)
             {
                 EnemyStateMachine.SwitchState(new EnemyIdleState(EnemyStateMachine,EnemyMovement));
