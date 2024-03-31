@@ -7,8 +7,6 @@ namespace Enemy.EnemyStates
 {
     public class EnemyObserveState : EnemyBaseState
     {
-        private CancellationToken _returnStartPositionToken;
-
         public EnemyObserveState(EnemyStateMachine enemyEnemyStateMachine, EnemyMovement enemyMovement) : base(enemyEnemyStateMachine, enemyMovement)
         {
         }
