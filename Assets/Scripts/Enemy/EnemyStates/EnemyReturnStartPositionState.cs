@@ -12,24 +12,18 @@ namespace Enemy.EnemyStates
 
         public override void Enter()
         {
-            _initPosition = EnemyStateMachine.EnemyData.EnemyInitPosition;
-            Debug.Log("onur burda " + _initPosition.position );
         }
 
         public override void Tick(float deltaTime)
         {
-            Debug.Log("onur burda " + GetTargetDistanceValue(_initPosition) );
-            if (GetTargetDistanceValue(_initPosition) >= 0.1f)
+            if (GetTargetDistanceValue(EnemyStateMachine.EnemyData.EnemyInitPosition) >= 0.1f)
             {
-                EnemyMovement.Rotate(EnemyStateMachine,deltaTime,EnemyStateMachine.EnemyData.RotateSpeed);
-                EnemyMovement.Movement(EnemyStateMachine,deltaTime,EnemyStateMachine.EnemyData.MovementSpeed);
+                MovementToTarget(EnemyStateMachine.EnemyData.EnemyInitPosition,deltaTime);
             }
-            // else
-            // {
-            //     EnemyStateMachine.SwitchState(new EnemyIdleState(EnemyStateMachine,EnemyMovement));
-            // }
-            
-            
+            else
+            {
+                 EnemyStateMachine.SwitchState(new EnemyIdleState(EnemyStateMachine,EnemyMovement));
+            }
         }
 
         public override void Exit()

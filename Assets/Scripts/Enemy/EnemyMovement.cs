@@ -11,11 +11,8 @@ namespace Enemy
         
             stateMachine.transform.position = Vector3.MoveTowards(stateMachine.transform.position,
                 target,deltaTime * movement);
-            // stateMachine.transform.position =
-            //     Vector3.Lerp(stateMachine.transform.position, target, deltaTime * movement);
-        
-            //stateMachine.transform.position += zRelativeVectorZ * deltaTime * movement;
         }
+        
     
         public void Rotate(EnemyStateMachine stateMachine,float deltaTime, float rotateSpeed)
         {

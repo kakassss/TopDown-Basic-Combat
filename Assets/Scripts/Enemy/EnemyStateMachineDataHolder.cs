@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,17 +16,21 @@ namespace Enemy
         public float PlayerObserveRange;
         
         [HideInInspector] public GameObject Player;
-        [HideInInspector] public Transform EnemyInitPosition;
+        public Vector3 EnemyInitPosition;
         
         public EnemyMovement enemyMovement;
         private void Awake()
         {
-            EnemyInitPosition = transform;
             
             enemyMovement = new EnemyMovement();
             Player = GameObject.FindGameObjectWithTag("Player");
             Agent.updatePosition = false;
             Agent.updateRotation = false;
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawCube(EnemyInitPosition,Vector3.one);
         }
     }
 }

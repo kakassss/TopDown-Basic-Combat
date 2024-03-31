@@ -17,7 +17,7 @@ namespace Enemy.EnemyStates
         
         public override void Enter()
         {
-            Debug.Log("reel onur 2 " + EnemyStateMachine.EnemyData.EnemyInitPosition.position);
+            Debug.Log("reel onur 2 " + EnemyStateMachine.EnemyData.EnemyInitPosition);
             _waitDuration = 0;
             EnemyStateMachine.EnemyData.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 0.1f);
         }
@@ -38,7 +38,7 @@ namespace Enemy.EnemyStates
             }
             else if (IsPlayerInXRange(EnemyStateMachine.EnemyData.PlayerObserveRange))
             {
-                MovementToPlayer(deltaTime,1.6f);
+                MovementToPlayer(deltaTime,1.25f);
                 Animation(0.5f);
             }
             else

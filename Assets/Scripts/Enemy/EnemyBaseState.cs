@@ -24,10 +24,10 @@ namespace Enemy
             return (currentEnemyTransform.position - EnemyStateMachine.EnemyData.Player.transform.position).magnitude;
         }
 
-        protected float GetTargetDistanceValue(Transform targetTransform)
+        protected float GetTargetDistanceValue(Vector3 targetTransform)
         {
             //TargetPos - currentEnemy Position
-            return (targetTransform.position - EnemyStateMachine.transform.position).magnitude;
+            return (targetTransform - EnemyStateMachine.transform.position).magnitude;
         }
     
         protected void MovementToPlayer(float deltaTime,float movementSpeedReducer = 1f)
@@ -36,7 +36,14 @@ namespace Enemy
         
             EnemyMovement.Movement(EnemyStateMachine,deltaTime,EnemyStateMachine.EnemyData.MovementSpeed / movementSpeedReducer);
             EnemyMovement.Rotate(EnemyStateMachine,deltaTime,EnemyStateMachine.EnemyData.RotateSpeed);
+        }
+
+        protected void MovementToTarget(Vector3 target, float deltaTime,float movementSpeedReducer = 1f)
+        {
+            EnemyStateMachine.EnemyData.Agent.destination = target;
         
+            EnemyMovement.Movement(EnemyStateMachine,deltaTime,EnemyStateMachine.EnemyData.MovementSpeed / movementSpeedReducer);
+            EnemyMovement.Rotate(EnemyStateMachine,deltaTime,EnemyStateMachine.EnemyData.RotateSpeed);
         }
     }
 }

@@ -2275,7 +2275,7 @@ MonoBehaviour:
   PlayerChaseRange: 5
   PlayerObserveRange: 10
   Player: {fileID: 0}
-  EnemyInitPosition: {fileID: 0}
+  EnemyInitPosition: {x: -4.9, y: 0, z: 4.19}
 --- !u!1 &7775827952490886237
 GameObject:
   m_ObjectHideFlags: 0
