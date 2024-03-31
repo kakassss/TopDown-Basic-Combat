@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace Enemy.EnemyStates
 {
-    public class EnemyChaseAndObserveState : EnemyBaseState
+    public class EnemyObserveState : EnemyBaseState
     {
         private const float DampTime = 0.1f;
         private CancellationToken _returnStartPositionToken;
 
         private float _waitDuration;
-        public EnemyChaseAndObserveState(EnemyStateMachine enemyEnemyStateMachine, EnemyMovement enemyMovement) : base(enemyEnemyStateMachine, enemyMovement)
+        public EnemyObserveState(EnemyStateMachine enemyEnemyStateMachine, EnemyMovement enemyMovement) : base(enemyEnemyStateMachine, enemyMovement)
         {
         }
         
@@ -25,10 +25,11 @@ namespace Enemy.EnemyStates
         public override void Tick(float deltaTime)
         {
             //TODO: can we get rid of these if blocks?
-            if (GetDistanceValueToPlayer(EnemyStateMachine.transform) <= 6f 
-                && GetDistanceValueToPlayer(EnemyStateMachine.transform) >= EnemyStateMachine.EnemyData.PlayerChaseRange)
+            var distancePlayer = GetDistanceValueToPlayer(EnemyStateMachine.transform);
+            
+            if (distancePlayer <= 6f && distancePlayer >= EnemyStateMachine.EnemyData.PlayerChaseRange)
             {
-                Animation(0f);
+                Animation_IdleRunBlend(0f,deltaTime);
                 _waitDuration += deltaTime;
                 WaitAndReturnStartPosition(_waitDuration);
             }
@@ -38,18 +39,15 @@ namespace Enemy.EnemyStates
             }
             else if (IsPlayerInXRange(EnemyStateMachine.EnemyData.PlayerObserveRange))
             {
-                MovementToPlayer(deltaTime,1.25f);
-                Animation(0.5f);
+                MovementAndRotateToPlayer(deltaTime,1.25f);
+                Animation_IdleRunBlend(0.5f,deltaTime);
             }
             else
             {
                 EnemyStateMachine.SwitchState(new EnemyIdleState(EnemyStateMachine,EnemyMovement));    
             }
             
-            void Animation(float value)
-            {
-                EnemyStateMachine.EnemyData.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, value,DampTime,deltaTime);
-            }
+            
         }
 
         private void WaitAndReturnStartPosition(float deltaTime)

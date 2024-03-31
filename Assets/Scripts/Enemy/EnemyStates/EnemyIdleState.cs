@@ -23,7 +23,7 @@ namespace Enemy.EnemyStates
             }
             else if (IsPlayerInXRange(EnemyStateMachine.EnemyData.PlayerObserveRange))
             {
-                EnemyStateMachine.SwitchState(new EnemyChaseAndObserveState(EnemyStateMachine,EnemyMovement));
+                EnemyStateMachine.SwitchState(new EnemyObserveState(EnemyStateMachine,EnemyMovement));
             }
         }
 

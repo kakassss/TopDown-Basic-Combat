@@ -14,11 +14,14 @@ namespace Enemy.EnemyStates
         {
         }
 
+        
         public override void Tick(float deltaTime)
         {
             if (GetTargetDistanceValue(EnemyStateMachine.EnemyData.EnemyInitPosition) >= 0.1f)
             {
+                Animation_IdleRunBlend(0.5f,deltaTime);
                 MovementToTarget(EnemyStateMachine.EnemyData.EnemyInitPosition,deltaTime);
+                RotateToTarget(EnemyStateMachine.EnemyData.EnemyInitPosition, deltaTime);
             }
             else
             {

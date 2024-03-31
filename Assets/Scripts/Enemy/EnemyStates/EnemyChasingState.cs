@@ -17,7 +17,7 @@ namespace Enemy.EnemyStates
 
         public override void Tick(float deltaTime)
         {
-            MovementToPlayer(deltaTime);
+            MovementAndRotateToPlayer(deltaTime);
             
             EnemyStateMachine.EnemyData.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, 1,dampTime,deltaTime);
             if (IsPlayerInXRange(EnemyStateMachine.EnemyData.PlayerChaseRange) == false)
