@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using PlayerData;
+using PlayerStates;
 using UnityEngine;
 
 public class PlayerAttackState : PlayerBaseState
@@ -55,38 +57,32 @@ public class PlayerAttackState : PlayerBaseState
     {
         attackTimeLimit += Time.deltaTime;
         playerMovement.AttackMovement(stateMachine.transform);
-        
-        if(attackTimeLimit > currentAnimationNormalizeDuration)
-        {
 
-            ComboContinues();
+        if (!(attackTimeLimit > currentAnimationNormalizeDuration)) return;
+        
+        ComboContinues();
             
-            //After current combo animation played, if player does not want to continue combo walk instead
-            if (stateMachine.PlayerInput.playerActions.PlayerControls.Movement.triggered)
-            {
-                stateMachine.SwitchState(new PlayerMovementState(stateMachine,playerMovement));
-                stateMachine.combatData.CurrentCombatIndex = 0;
-            }
+        //After current combo animation played, if player does not want to continue combo walk instead
+        if (stateMachine.PlayerInput.playerActions.PlayerControls.Movement.triggered)
+        {
+            stateMachine.SwitchState(new PlayerMovementState(stateMachine,playerMovement));
+            stateMachine.combatData.CurrentCombatIndex = 0;
+        }
             
-            nextComboBreak += Time.deltaTime;
+        nextComboBreak += Time.deltaTime;
             
-            //Player can continue his combo after a while later(currently 0.5)
-            if (nextComboBreak >= 0.5f) // TODO: We can change comboBreaker duration????
-            {
-                
-                stateMachine.combatData.CurrentCombatIndex = 0;
-                //After current combo finished, if player holds wasd or gamepad stick inputs, can walk
-                if (stateMachine.PlayerInput.playerActions.PlayerControls.Movement.IsInProgress())
-                {
-                    stateMachine.SwitchState(new PlayerMovementState(stateMachine,playerMovement));
-                }
-                else
-                {
-                    stateMachine.SwitchState(new PlayerIdleState(stateMachine,playerMovement));
-                }
-            }
-            
-            
+        //Player can continue his combo after a while later(currently 0.5)
+        if (!(nextComboBreak >= 0.5f)) return; // TODO: We can change comboBreaker duration????
+        
+        stateMachine.combatData.CurrentCombatIndex = 0;
+        //After current combo finished, if player holds wasd or gamepad stick inputs, can walk
+        if (stateMachine.PlayerInput.playerActions.PlayerControls.Movement.IsInProgress())
+        {
+            stateMachine.SwitchState(new PlayerMovementState(stateMachine,playerMovement));
+        }
+        else
+        {
+            stateMachine.SwitchState(new PlayerIdleState(stateMachine,playerMovement));
         }
     }
 

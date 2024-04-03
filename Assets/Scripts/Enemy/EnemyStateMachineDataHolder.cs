@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Enemy
+namespace EnemyStates
 {
     public class EnemyStateMachineDataHolder : MonoBehaviour
     { 

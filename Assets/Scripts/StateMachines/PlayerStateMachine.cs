@@ -1,4 +1,6 @@
+using PlayerData;
 using StateMachines;
+using PlayerStates;
 using UnityEngine;
 
 public class PlayerStateMachine : StateMachine
@@ -8,16 +10,15 @@ public class PlayerStateMachine : StateMachine
     [SerializeField] public PlayerAttackComboData comboDatas;
     public PlayerCombatData combatData;
     [SerializeField] public Animator animator;
-     public AnimationCurve her;
 
-    protected PlayerMovement playerMovement;
+    private PlayerMovement _playerMovement;
     private void Start()
     {
-        playerMovement = new();
+        _playerMovement = new();
         combatData = new();
 
-        SwitchState(new PlayerIdleState(this,playerMovement));
-        SwichHelperState(new PlayerEmptyState(this,playerMovement));
+        SwitchState(new PlayerIdleState(this,_playerMovement));
+        SwichHelperState(new PlayerEmptyState(this,_playerMovement));
     }
 
 }

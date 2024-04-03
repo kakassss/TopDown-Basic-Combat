@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Enemy
+namespace EnemyStates
 {
     public abstract class EnemyBaseState : State
     {

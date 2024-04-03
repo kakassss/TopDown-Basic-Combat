@@ -1,8 +1,8 @@
-using Enemy.EnemyStates;
+using EnemyStates.EnemyStates;
 using StateMachines;
 using UnityEngine;
 
-namespace Enemy
+namespace EnemyStates
 {
     public class EnemyStateMachine : StateMachine
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Enemy.EnemyStates
+namespace EnemyStates.EnemyStates
 {
     public class EnemyChasingState : EnemyBaseState
     {

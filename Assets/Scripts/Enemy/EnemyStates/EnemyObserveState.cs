@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Enemy.EnemyStates
+namespace EnemyStates.EnemyStates
 {
     public class EnemyObserveState : EnemyBaseState
     {
@@ -13,10 +13,13 @@ namespace Enemy.EnemyStates
         
         public override void Enter()
         {
+            
         }
-
+        
         public override void Tick(float deltaTime)
         {
+            Animation_IdleRunBlend(0.0f,deltaTime);
+            
             if (IsPlayerInXRange(EnemyStateMachine.EnemyData.PlayerChaseRange))
             {
                 EnemyStateMachine.SwitchState(new EnemyChasingState(EnemyStateMachine,EnemyMovement));
