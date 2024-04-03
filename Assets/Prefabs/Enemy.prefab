@@ -2270,7 +2270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Agent: {fileID: 6764568940498300718}
   Animator: {fileID: 2534648608994941416}
-  MovementSpeed: 5
+  MovementSpeed: 0
   RotateSpeed: 5
   PlayerChaseRange: 5
   PlayerObserveRange: 10

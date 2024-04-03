@@ -1590,9 +1590,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <PlayerInput>k__BackingField: {fileID: 4222667644661884920}
+  combatData: {fileID: 11400000, guid: cb727b6c01df617479c552dd5882bec5, type: 2}
   datas: {fileID: 11400000, guid: 9cc71c65033ba894cabaedca168e7992, type: 2}
-  comboDatas: {fileID: 11400000, guid: 7218147236a4fd74f9f15d61fffad55e, type: 2}
   animator: {fileID: 4317956190913324910}
+  Enemy: {fileID: 0}
 --- !u!114 &4222667644661884920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1624,7 +1625,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 3.32
   m_Center: {x: 0, y: 1.09, z: 0}

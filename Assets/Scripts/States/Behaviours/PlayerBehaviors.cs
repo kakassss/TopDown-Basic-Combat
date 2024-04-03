@@ -45,6 +45,12 @@ public class PlayerMovement
         targetPos = pos.position + (forward * travelValue);
     }
 
+    
+    public void SetAttackMovementToEnemy(Transform pos,Vector3 targetPos)
+    {
+        pos.transform.position = Vector3.MoveTowards(pos.transform.position, targetPos, Time.deltaTime);
+    }
+
     public void AttackMovement(Transform pos) // TODO: maybe use AnimationCurve curve instead of time.deltaTime
     {
         //TODO: you can try vector3.smoothdamp or lerp functions insted of moveTowards

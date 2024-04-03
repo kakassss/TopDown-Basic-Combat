@@ -36,33 +36,33 @@ namespace States
             _nextComboBreakCounter = 0;
         
             StateMachine.animator.CrossFadeInFixedTime(
-                StateMachine.datas.animationClips.GetCurrentCombatAnimationName(StateMachine.combatData.CurrentCombatIndex),
+                StateMachine.datas.animationClips.GetCurrentCombatAnimationName(StateMachine.CurrentCombatIndex),
                 AnimTransitionDuration);
         
             //Get the current Animation combatData
             _currentAnimation =
-                StateMachine.datas.animationClips.GetCombatAnimationData()[StateMachine.combatData.CurrentCombatIndex];
+                StateMachine.datas.animationClips.GetCombatAnimationData()[StateMachine.CurrentCombatIndex];
             //Get the current combat animation average duration diveded by our value. With this value we find kind of normalize animation duration
             _currentAnimationNormalizeDuration =
                 (_currentAnimation.animation.averageDuration / _currentAnimation.animationSpeed) - _currentAnimation.animationDurationOffset;
         
             //Increase current combo count
-            StateMachine.combatData.CurrentCombatIndex++;
+            StateMachine.CurrentCombatIndex++;
         
             //Check currentCombo is max or not
-            if(StateMachine.combatData.CurrentCombatIndex >= StateMachine.datas.animationClips.LeftClickCombatList.Count)
+            if(StateMachine.CurrentCombatIndex >= StateMachine.datas.animationClips.LeftClickCombatList.Count)
             {
-                StateMachine.combatData.CurrentCombatIndex = 0;
+                StateMachine.CurrentCombatIndex = 0;
             }
-        
-            PlayerMovement.SetAttackMovementData(StateMachine.transform,0.3f);
+
+            SetAttackMovementData();
         }
     
         public override void Tick(float deltaTime)
         {
             _attackTimeLimit += Time.deltaTime;
 
-            SetAttackMovement();
+            AttackMovement();
 
             if (!(_attackTimeLimit > _currentAnimationNormalizeDuration)) return;
         
@@ -72,7 +72,7 @@ namespace States
             if (StateMachine.PlayerInput.playerActions.PlayerControls.Movement.triggered)
             {
                 StateMachine.SwitchState(new PlayerMovementState(StateMachine,PlayerMovement));
-                StateMachine.combatData.CurrentCombatIndex = 0;
+                StateMachine.CurrentCombatIndex = 0;
             }
             
             _nextComboBreakCounter += Time.deltaTime;
@@ -80,7 +80,7 @@ namespace States
             //Player can continue his combo after a while later(currently 0.5)
             if (!(_nextComboBreakCounter >= ComboBreakDuration)) return;
         
-            StateMachine.combatData.CurrentCombatIndex = 0;
+            StateMachine.CurrentCombatIndex = 0;
             //After current combo finished, if player holds wasd or gamepad stick inputs, can walk
             if (StateMachine.PlayerInput.playerActions.PlayerControls.Movement.IsInProgress())
             {
@@ -112,11 +112,19 @@ namespace States
             }
         }
 
-        private void SetAttackMovement()
+        private void SetAttackMovementData()
         {
-            if (IsEnemyInAttackRange(10))
+            if (IsEnemyInAttackRange(StateMachine.combatData.AttackRange) == false)
             {
-                PlayerMovement.AttackMovement(StateMachine.Enemy.transform);
+                PlayerMovement.SetAttackMovementData(StateMachine.transform,0.3f);
+            }
+        }
+        
+        private void AttackMovement()
+        {
+            if (IsEnemyInAttackRange(StateMachine.combatData.AttackRange))
+            {
+                PlayerMovement.SetAttackMovementToEnemy(StateMachine.transform,StateMachine.Enemy.transform.position);
             }
             else
             {
@@ -135,7 +143,7 @@ namespace States
     
         private void OnDodge()
         {
-            StateMachine.combatData.CurrentCombatIndex = 0;
+            StateMachine.CurrentCombatIndex = 0;
             StateMachine.SwitchState(new PlayerDodgeState(StateMachine,PlayerMovement));
         }
 
