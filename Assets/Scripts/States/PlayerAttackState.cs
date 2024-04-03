@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class PlayerAttackState : PlayerBaseState
 {
-    private List<float> attackAnimationsDurations;
+    private List<float> _attackAnimationsDurations;
     
-    private CombatAnimationData currentAnimation;
+    private CombatAnimationData _currentAnimation;
     
-    private float currentAnimationNormalizeDuration;
-    private float attack1AnimationTime;
-    private float attack2AnimationTime;
+    private float _currentAnimationNormalizeDuration;
+    private float _attack1AnimationTime;
+    private float _attack2AnimationTime;
 
-    private float attackTimeLimit;
-    private float nextComboBreak;
+    private float _attackTimeLimit;
+    private float _nextComboBreak;
     
     public PlayerAttackState(PlayerStateMachine stateMachine,PlayerMovement playerMovement) : base(stateMachine,playerMovement)
     {
@@ -24,22 +24,22 @@ public class PlayerAttackState : PlayerBaseState
     {
         stateMachine.PlayerInput.OnDodgeInput += OnDodge;
         
-        attackAnimationsDurations = new List<float>(new float[stateMachine.datas.animationClips.GetCombatAnimationData().Count]);
+        _attackAnimationsDurations = new List<float>(new float[stateMachine.datas.animationClips.GetCombatAnimationData().Count]);
         SetAnimationDurationDatas();
         
-        attackTimeLimit = 0;
-        nextComboBreak = 0;
+        _attackTimeLimit = 0;
+        _nextComboBreak = 0;
         
         stateMachine.animator.CrossFadeInFixedTime(
             stateMachine.datas.animationClips.GetCurrentCombatAnimationName(stateMachine.combatData.CurrentCombatIndex),
             0.5f); //TODO: We can change trasitionDuration???
         
         //Get the current Animation combatData
-        currentAnimation =
+        _currentAnimation =
             stateMachine.datas.animationClips.GetCombatAnimationData()[stateMachine.combatData.CurrentCombatIndex];
         //Get the current combat animation average duration diveded by our value. With this value we find kind of normalize animation duration
-        currentAnimationNormalizeDuration =
-            (currentAnimation.animation.averageDuration / currentAnimation.animationSpeed) - currentAnimation.animationDurationOffset;
+        _currentAnimationNormalizeDuration =
+            (_currentAnimation.animation.averageDuration / _currentAnimation.animationSpeed) - _currentAnimation.animationDurationOffset;
         
         //Increase current combo count
         stateMachine.combatData.CurrentCombatIndex++;
@@ -55,10 +55,10 @@ public class PlayerAttackState : PlayerBaseState
     
     public override void Tick(float deltaTime)
     {
-        attackTimeLimit += Time.deltaTime;
+        _attackTimeLimit += Time.deltaTime;
         playerMovement.AttackMovement(stateMachine.transform);
 
-        if (!(attackTimeLimit > currentAnimationNormalizeDuration)) return;
+        if (!(_attackTimeLimit > _currentAnimationNormalizeDuration)) return;
         
         ComboContinues();
             
@@ -69,10 +69,10 @@ public class PlayerAttackState : PlayerBaseState
             stateMachine.combatData.CurrentCombatIndex = 0;
         }
             
-        nextComboBreak += Time.deltaTime;
+        _nextComboBreak += Time.deltaTime;
             
         //Player can continue his combo after a while later(currently 0.5)
-        if (!(nextComboBreak >= 0.5f)) return; // TODO: We can change comboBreaker duration????
+        if (!(_nextComboBreak >= 0.5f)) return; // TODO: We can change comboBreaker duration????
         
         stateMachine.combatData.CurrentCombatIndex = 0;
         //After current combo finished, if player holds wasd or gamepad stick inputs, can walk
@@ -108,9 +108,9 @@ public class PlayerAttackState : PlayerBaseState
     
     private void SetAnimationDurationDatas()
     {
-        for (int i = 0; i < attackAnimationsDurations.Count; i++)
+        for (int i = 0; i < _attackAnimationsDurations.Count; i++)
         {
-            attackAnimationsDurations[i] = stateMachine.datas.animationClips.GetCombatAnimationData()[i].animation.averageDuration;
+            _attackAnimationsDurations[i] = stateMachine.datas.animationClips.GetCombatAnimationData()[i].animation.averageDuration;
         }
     }
     
