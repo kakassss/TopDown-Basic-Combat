@@ -7,6 +7,9 @@ namespace States
 {
     public class PlayerAttackState : PlayerBaseState
     {
+        private const float ComboBreakDuration = 0.5f;
+        private const float AnimTransitionDuration = 0.5f;
+            
         private List<float> _attackAnimationsDurations;
     
         private CombatAnimationData _currentAnimation;
@@ -16,7 +19,7 @@ namespace States
         private float _attack2AnimationTime;
 
         private float _attackTimeLimit;
-        private float _nextComboBreak;
+        private float _nextComboBreakCounter;
     
         public PlayerAttackState(PlayerStateMachine stateMachine,PlayerMovement playerMovement) : base(stateMachine,playerMovement)
         {
@@ -30,11 +33,11 @@ namespace States
             SetAnimationDurationDatas();
         
             _attackTimeLimit = 0;
-            _nextComboBreak = 0;
+            _nextComboBreakCounter = 0;
         
             StateMachine.animator.CrossFadeInFixedTime(
                 StateMachine.datas.animationClips.GetCurrentCombatAnimationName(StateMachine.combatData.CurrentCombatIndex),
-                0.5f); //TODO: We can change trasitionDuration???
+                AnimTransitionDuration);
         
             //Get the current Animation combatData
             _currentAnimation =
@@ -72,10 +75,10 @@ namespace States
                 StateMachine.combatData.CurrentCombatIndex = 0;
             }
             
-            _nextComboBreak += Time.deltaTime;
+            _nextComboBreakCounter += Time.deltaTime;
             
             //Player can continue his combo after a while later(currently 0.5)
-            if (!(_nextComboBreak >= 0.5f)) return; // TODO: We can change comboBreaker duration????
+            if (!(_nextComboBreakCounter >= ComboBreakDuration)) return;
         
             StateMachine.combatData.CurrentCombatIndex = 0;
             //After current combo finished, if player holds wasd or gamepad stick inputs, can walk
