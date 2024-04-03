@@ -1,24 +1,28 @@
 using PlayerData;
-using StateMachines;
-using PlayerStates;
+using States;
 using UnityEngine;
 
-public class PlayerStateMachine : StateMachine
+namespace StateMachines
 {
-    [field: SerializeField] public PlayerInput PlayerInput {get; private set;}
-    [SerializeField] public PlayerStateDatas datas;
-    [SerializeField] public PlayerAttackComboData comboDatas;
-    public PlayerCombatData combatData;
-    [SerializeField] public Animator animator;
-
-    private PlayerMovement _playerMovement;
-    private void Start()
+    public class PlayerStateMachine : StateMachine
     {
-        _playerMovement = new();
-        combatData = new();
+        [field: SerializeField] public PlayerInput PlayerInput {get; private set;}
+        [SerializeField] public PlayerStateDatas datas;
+        public PlayerCombatData combatData;
+        [SerializeField] public Animator animator;
 
-        SwitchState(new PlayerIdleState(this,_playerMovement));
-        SwichHelperState(new PlayerEmptyState(this,_playerMovement));
+        private PlayerMovement _playerMovement;
+
+        [HideInInspector] public GameObject Enemy;
+        private void Start()
+        {
+            _playerMovement = new();
+            Enemy = GameObject.FindGameObjectWithTag("Enemy");
+            combatData = new();
+
+            SwitchState(new PlayerIdleState(this,_playerMovement));
+            SwichHelperState(new PlayerEmptyState(this,_playerMovement));
+        }
+
     }
-
 }

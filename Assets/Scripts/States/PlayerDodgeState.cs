@@ -1,3 +1,5 @@
+using StateMachines;
+using States;
 using UnityEngine;
 
 public class PlayerDodgeState : PlayerBaseState
@@ -11,24 +13,24 @@ public class PlayerDodgeState : PlayerBaseState
 
     public override void Enter()
     {
-        stateMachine.animator.CrossFadeInFixedTime("Dodging",0.2f);
-        animationTime = stateMachine.datas.animationClips.DodgeAnimation.averageDuration;
+        StateMachine.animator.CrossFadeInFixedTime("Dodging",0.2f);
+        animationTime = StateMachine.datas.animationClips.DodgeAnimation.averageDuration;
         dodgeLimit = 0;
 
 
-        stateMachine.SwichHelperState(new PlayerHelperDodgeMovementState(stateMachine,playerMovement));
+        StateMachine.SwichHelperState(new PlayerHelperDodgeMovementState(StateMachine,PlayerMovement));
     }
 
     public override void Tick(float deltaTime)
     {
         dodgeLimit += Time.deltaTime;
 
-        DodgeMovement(stateMachine.transform);
+        DodgeMovement(StateMachine.transform);
         
         if(dodgeLimit >= animationTime - 1.2f)
         {
-            stateMachine.SwitchState(new PlayerMovementState(stateMachine,playerMovement));
-            stateMachine.SwichHelperState(new PlayerEmptyState(stateMachine,playerMovement));
+            StateMachine.SwitchState(new PlayerMovementState(StateMachine,PlayerMovement));
+            StateMachine.SwichHelperState(new PlayerEmptyState(StateMachine,PlayerMovement));
         }
 
     }
@@ -42,7 +44,7 @@ public class PlayerDodgeState : PlayerBaseState
     {
         if(dodgeLimit < dodgeMovementMax)
         {
-            playerMovement.Dodge(player,10);
+            PlayerMovement.Dodge(player,10);
             //player.transform.Translate(Vector3.forward * 10 * Time.deltaTime);
         }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PlayerData
 {
-    [CreateAssetMenu(fileName = "PlayerStateDatas", menuName = "ScriptableObject/PlayerStateDatas", order = 0)]
+    [CreateAssetMenu(fileName = "PlayerStateData", menuName = "ScriptableObject/PlayerStateData", order = 0)]
     public class PlayerStateDatas : ScriptableObject 
     {
         public PlayerStats stats;
@@ -33,7 +33,7 @@ namespace PlayerData
         public AnimationClip DodgeAnimation;
 
         [Header("Combat Anim Clips")]
-        [SerializeField] private List<CombatAnimationData> LeftClickCombatList;
+        public List<CombatAnimationData> LeftClickCombatList;
     
         public string GetCurrentCombatAnimationName(int index)
         {

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using StateMachines;
+using States;
 using UnityEngine;
 
 public class PlayerJumpState : PlayerBaseState
@@ -20,7 +22,7 @@ public class PlayerJumpState : PlayerBaseState
     {
         if(playerTransform.position.y >= 4)
         {
-            stateMachine.SwitchState(new PlayerMovementState(stateMachine,playerMovement));
+            StateMachine.SwitchState(new PlayerMovementState(StateMachine,PlayerMovement));
         }
     }
 

@@ -1,5 +1,6 @@
 using System;
-using PlayerStates;
+using StateMachines;
+using States;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,21 +14,21 @@ public class PlayerMovementState : PlayerBaseState
     public override void Enter()
     {
         //stateMachine.playerInput.OnJumpInput += OnJump;
-        stateMachine.PlayerInput.OnDodgeInput += OnDodge;
-        stateMachine.PlayerInput.OnAttackLeftInput += OnFire;
+        StateMachine.PlayerInput.OnDodgeInput += OnDodge;
+        StateMachine.PlayerInput.OnAttackLeftInput += OnFire;
 
-        stateMachine.animator.CrossFade("Run",0.2f);
+        StateMachine.animator.CrossFade("Run",0.2f);
         Debug.Log("Enter Movement");
     }
 
     public override void Tick(float deltaTime)
     {
-        playerMovement.Movement(deltaTime,stateMachine,stateMachine.datas.stats.movementSpeed);
-        playerMovement.Rotate(deltaTime,stateMachine,stateMachine.datas.stats.rotateSpeed);
+        PlayerMovement.Movement(deltaTime,StateMachine,StateMachine.datas.stats.movementSpeed);
+        PlayerMovement.Rotate(deltaTime,StateMachine,StateMachine.datas.stats.rotateSpeed);
 
-        if(stateMachine.PlayerInput.movementVector == Vector3.zero)
+        if(StateMachine.PlayerInput.movementVector == Vector3.zero)
         {
-            stateMachine.SwitchState(new PlayerIdleState(stateMachine,playerMovement));
+            StateMachine.SwitchState(new PlayerIdleState(StateMachine,PlayerMovement));
         }
     }
 
@@ -35,25 +36,25 @@ public class PlayerMovementState : PlayerBaseState
     {
         Debug.Log("Exit Movement");
         //stateMachine.playerInput.OnJumpInput -= OnJump;
-        stateMachine.PlayerInput.OnDodgeInput -= OnDodge;
-        stateMachine.PlayerInput.OnAttackLeftInput -= OnFire;
+        StateMachine.PlayerInput.OnDodgeInput -= OnDodge;
+        StateMachine.PlayerInput.OnAttackLeftInput -= OnFire;
     }
 
 
     private void OnJump()
     {
-        stateMachine.SwitchState(new PlayerJumpState(stateMachine,playerMovement,stateMachine.transform));
+        StateMachine.SwitchState(new PlayerJumpState(StateMachine,PlayerMovement,StateMachine.transform));
     }
 
     private void OnFire()
     {
         Debug.Log("onur 3333");
-        stateMachine.SwitchState(new PlayerAttackState(stateMachine,playerMovement));
+        StateMachine.SwitchState(new PlayerAttackState(StateMachine,PlayerMovement));
     }
 
     private void OnDodge()
     {
-        stateMachine.SwitchState(new PlayerDodgeState(stateMachine,playerMovement));
+        StateMachine.SwitchState(new PlayerDodgeState(StateMachine,PlayerMovement));
     }
 
 }

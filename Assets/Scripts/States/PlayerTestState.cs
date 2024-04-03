@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using StateMachines;
+using States;
 using UnityEngine;
 
 public class PlayerTestState : PlayerBaseState
@@ -24,7 +26,7 @@ public class PlayerTestState : PlayerBaseState
         }
         else
         {
-            stateMachine.SwitchState(new PlayerTestState(stateMachine,playerMovement,5));
+            StateMachine.SwitchState(new PlayerTestState(StateMachine,PlayerMovement,5));
         }
     }
 

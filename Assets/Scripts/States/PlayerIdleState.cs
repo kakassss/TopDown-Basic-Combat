@@ -1,5 +1,7 @@
 
-namespace PlayerStates
+using StateMachines;
+
+namespace States
 {
     public class PlayerIdleState : PlayerBaseState
     {
@@ -9,10 +11,10 @@ namespace PlayerStates
 
         public override void Enter()
         {
-            stateMachine.PlayerInput.OnMovementInput += OnMovement;
-            stateMachine.PlayerInput.OnAttackLeftInput += OnAttackLeftClick;
-            stateMachine.PlayerInput.OnDodgeInput += OnDodge;
-            stateMachine.animator.CrossFade(PlayerAnimationsNames.IdleAnim,0.1f);
+            StateMachine.PlayerInput.OnMovementInput += OnMovement;
+            StateMachine.PlayerInput.OnAttackLeftInput += OnAttackLeftClick;
+            StateMachine.PlayerInput.OnDodgeInput += OnDodge;
+            StateMachine.animator.CrossFade(PlayerAnimationsNames.IdleAnim,0.1f);
         }
 
         public override void Tick(float deltaTime)
@@ -22,25 +24,25 @@ namespace PlayerStates
 
         public override void Exit()
         {
-            stateMachine.PlayerInput.OnMovementInput -= OnMovement;
-            stateMachine.PlayerInput.OnAttackLeftInput -= OnAttackLeftClick;
-            stateMachine.PlayerInput.OnDodgeInput -= OnDodge;
+            StateMachine.PlayerInput.OnMovementInput -= OnMovement;
+            StateMachine.PlayerInput.OnAttackLeftInput -= OnAttackLeftClick;
+            StateMachine.PlayerInput.OnDodgeInput -= OnDodge;
         }
 
         private void OnMovement()
         {
-            stateMachine.SwitchState(new PlayerMovementState(stateMachine,playerMovement));
+            StateMachine.SwitchState(new PlayerMovementState(StateMachine,PlayerMovement));
         }
 
         private void OnAttackLeftClick()
         {
-            stateMachine.SwitchState(new PlayerAttackState(stateMachine,playerMovement));
+            StateMachine.SwitchState(new PlayerAttackState(StateMachine,PlayerMovement));
         }
 
 
         private void OnDodge()
         {
-            stateMachine.SwitchState(new PlayerDodgeState(stateMachine,playerMovement));
+            StateMachine.SwitchState(new PlayerDodgeState(StateMachine,PlayerMovement));
         }
     }
 }

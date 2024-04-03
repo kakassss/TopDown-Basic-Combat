@@ -1,4 +1,7 @@
 
+using StateMachines;
+using States;
+
 public class PlayerHelperDodgeMovementState : PlayerBaseState
 {
     private float dodgingMovementSpeed = 5f;
@@ -15,8 +18,8 @@ public class PlayerHelperDodgeMovementState : PlayerBaseState
 
     public override void Tick(float deltaTime)
     {
-        playerMovement.Movement(deltaTime,stateMachine,dodgingMovementSpeed);
-        playerMovement.Rotate(deltaTime,stateMachine,dodgingRotateSpeed);
+        PlayerMovement.Movement(deltaTime,StateMachine,dodgingMovementSpeed);
+        PlayerMovement.Rotate(deltaTime,StateMachine,dodgingRotateSpeed);
     }
 
     public override void Exit()
