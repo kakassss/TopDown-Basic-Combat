@@ -124,7 +124,7 @@ namespace States
         {
             if (IsEnemyInAttackRange(StateMachine.combatData.AttackRange))
             {
-                PlayerMovement.SetAttackMovementToEnemy(StateMachine.transform,StateMachine.Enemy.transform.position);
+                PlayerMovement.SetAttackMovementToEnemy(StateMachine.transform,StateMachine.Enemy.transform);
             }
             else
             {

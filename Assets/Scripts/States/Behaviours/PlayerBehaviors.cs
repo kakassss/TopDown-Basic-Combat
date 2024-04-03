@@ -46,9 +46,9 @@ public class PlayerMovement
     }
 
     
-    public void SetAttackMovementToEnemy(Transform pos,Vector3 targetPos)
+    public void SetAttackMovementToEnemy(Transform pos,Transform targetPos)
     {
-        pos.transform.position = Vector3.MoveTowards(pos.transform.position, targetPos, Time.deltaTime);
+        pos.transform.position = Vector3.MoveTowards(pos.transform.position, targetPos.position, Time.deltaTime);
     }
 
     public void AttackMovement(Transform pos) // TODO: maybe use AnimationCurve curve instead of time.deltaTime
