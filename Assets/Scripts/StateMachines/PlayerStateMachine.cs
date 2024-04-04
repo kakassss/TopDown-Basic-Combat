@@ -22,7 +22,6 @@ namespace StateMachines
         {
             _playerMovement = new();
             Enemy = GameObject.FindGameObjectWithTag("Enemy");
-            //combatData = new();
 
             SwitchState(new PlayerIdleState(this,_playerMovement));
             SwichHelperState(new PlayerEmptyState(this,_playerMovement));
@@ -32,7 +31,6 @@ namespace StateMachines
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position,combatData.AttackRange);
-            
         }
     }
 }

@@ -7,7 +7,7 @@ namespace States
 {
     public class PlayerAttackState : PlayerBaseState
     {
-        private const float ComboBreakDuration = 0.5f;
+        private const float ComboBreakDuration = 0.45f;
         private const float AnimTransitionDuration = 0.5f;
             
         private List<float> _attackAnimationsDurations;
@@ -56,7 +56,6 @@ namespace States
             }
 
             SetAttackMovementData();
-            
         }
     
         public override void Tick(float deltaTime)
