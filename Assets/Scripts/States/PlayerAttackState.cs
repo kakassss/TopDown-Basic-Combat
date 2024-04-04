@@ -56,6 +56,7 @@ namespace States
             }
 
             SetAttackMovementData();
+            
         }
     
         public override void Tick(float deltaTime)
@@ -116,7 +117,11 @@ namespace States
         {
             if (IsEnemyInAttackRange(StateMachine.combatData.AttackRange) == false)
             {
-                PlayerMovement.SetAttackMovementData(StateMachine.transform,0.3f);
+                PlayerMovement.SetAttackMovementWithOutTargetData(StateMachine.transform,0.3f);
+            }
+            else
+            {
+                PlayerMovement.SetAttackMovementToEnemyData(StateMachine.transform,StateMachine.Enemy.transform,0.5f);
             }
         }
         
@@ -124,11 +129,11 @@ namespace States
         {
             if (IsEnemyInAttackRange(StateMachine.combatData.AttackRange))
             {
-                PlayerMovement.SetAttackMovementToEnemy(StateMachine.transform,StateMachine.Enemy.transform);
+                PlayerMovement.SetAttackMovementToEnemy(StateMachine.transform,StateMachine.Enemy.transform.position);
             }
             else
             {
-                PlayerMovement.AttackMovement(StateMachine.transform);
+                PlayerMovement.AttackMovementWithOutTarget(StateMachine.transform);
             }
         }
         

@@ -1,4 +1,5 @@
 using StateMachines;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerBehaviors
@@ -33,28 +34,47 @@ public class PlayerMovement
 
     #region AttackMovement
     
-    private Vector3 forward;
-    private Vector3 targetPos;
+    private const float MinAttackMovementDistance = 1.35f;
     
-    public void SetAttackMovementData(Transform pos,float travelValue)
+    private Vector3 _forward;
+    private Vector3 _targetPos;
+    
+    public void SetAttackMovementWithOutTargetData(Transform pos,float travelValue)
     {
-        forward = pos.forward;
-        forward.y = 0;
-        forward.Normalize();
+        _forward = pos.forward;
+        _forward.y = 0;
+        _forward.Normalize();
 
-        targetPos = pos.position + (forward * travelValue);
+        _targetPos = pos.position + (_forward * travelValue);
     }
 
-    
-    public void SetAttackMovementToEnemy(Transform pos,Transform targetPos)
+    private Vector3 _targetEnemyPos;
+    private float _distance;
+    public void SetAttackMovementToEnemyData(Transform pos, Transform enemyPos, float travelValue)
     {
-        pos.transform.position = Vector3.MoveTowards(pos.transform.position, targetPos.position, Time.deltaTime);
+        var targetPos = enemyPos.position;
+        var playerPos = pos.position;
+        
+        var distanceVector = (targetPos - playerPos).normalized;
+        _targetEnemyPos = (distanceVector * travelValue + playerPos);
+        
+        _distance = Vector3.Distance(playerPos, targetPos);
     }
-
-    public void AttackMovement(Transform pos) // TODO: maybe use AnimationCurve curve instead of time.deltaTime
+    
+    
+    public void SetAttackMovementToEnemy(Transform pos,Vector3 enemyPos)
+    {
+        pos.transform.LookAt(enemyPos);
+        
+        if(_distance <= MinAttackMovementDistance) return;
+        
+        pos.transform.position = Vector3.MoveTowards(pos.transform.position, _targetEnemyPos , Time.deltaTime);
+    }
+    
+    public void AttackMovementWithOutTarget(Transform pos) // TODO: maybe use AnimationCurve curve instead of time.deltaTime
     {
         //TODO: you can try vector3.smoothdamp or lerp functions insted of moveTowards
-        pos.transform.position = Vector3.MoveTowards(pos.transform.position, targetPos, Time.deltaTime);
+        pos.transform.position = Vector3.MoveTowards(pos.transform.position, _targetPos, Time.deltaTime);
     }
     
     #endregion

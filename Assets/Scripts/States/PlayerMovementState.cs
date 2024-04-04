@@ -48,7 +48,6 @@ public class PlayerMovementState : PlayerBaseState
 
     private void OnFire()
     {
-        Debug.Log("onur 3333");
         StateMachine.SwitchState(new PlayerAttackState(StateMachine,PlayerMovement));
     }
 

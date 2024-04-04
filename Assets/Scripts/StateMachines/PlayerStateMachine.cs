@@ -32,6 +32,7 @@ namespace StateMachines
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position,combatData.AttackRange);
+            
         }
     }
 }
