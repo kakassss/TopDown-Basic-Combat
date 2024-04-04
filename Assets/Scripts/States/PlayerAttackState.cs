@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using PlayerData;
 using StateMachines;
@@ -114,28 +115,29 @@ namespace States
 
         private void SetAttackMovementData()
         {
-            if (IsEnemyInAttackRange(StateMachine.combatData.AttackRange) == false)
-            {
-                PlayerMovement.SetAttackMovementWithOutTargetData(StateMachine.transform,0.3f);
-            }
-            else
-            {
-                PlayerMovement.SetAttackMovementToEnemyData(StateMachine.transform,StateMachine.Enemy.transform,0.5f);
-            }
+            SetCurrentAttackMovement(
+                (() => PlayerMovement.SetAttackMovementToEnemyData(StateMachine.transform,StateMachine.Enemy.transform,0.5f)),
+                (() => PlayerMovement.SetAttackMovementWithOutTargetData(StateMachine.transform,0.3f)));
+        }
+
+        private void AttackMovement()
+        {
+            SetCurrentAttackMovement(
+                (() => PlayerMovement.SetAttackMovementToEnemy(StateMachine.transform,StateMachine.Enemy.transform.position)),
+                (() => PlayerMovement.AttackMovementWithOutTarget(StateMachine.transform)));
         }
         
-        private void AttackMovement()
+        private void SetCurrentAttackMovement(Action OnTrue = null, Action OnFalse = null)
         {
             if (IsEnemyInAttackRange(StateMachine.combatData.AttackRange))
             {
-                PlayerMovement.SetAttackMovementToEnemy(StateMachine.transform,StateMachine.Enemy.transform.position);
+                OnTrue?.Invoke();
             }
             else
             {
-                PlayerMovement.AttackMovementWithOutTarget(StateMachine.transform);
+                OnFalse?.Invoke();
             }
         }
-        
         
         private void SetAnimationDurationDatas()
         {
@@ -150,6 +152,6 @@ namespace States
             StateMachine.CurrentCombatIndex = 0;
             StateMachine.SwitchState(new PlayerDodgeState(StateMachine,PlayerMovement));
         }
-
+        
     }
 }
