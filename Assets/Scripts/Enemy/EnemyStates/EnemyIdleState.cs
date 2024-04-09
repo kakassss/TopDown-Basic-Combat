@@ -4,7 +4,8 @@ namespace EnemyStates.EnemyStates
 {
     public class EnemyIdleState : EnemyBaseState
     {
-        private EventBinding<EnemyTakenDamageEvent> enemyTakenDamage;
+        private EventBinding<EnemyTakenDamageEvent> _enemyTakenDamage;
+        
         public EnemyIdleState(EnemyStateMachine enemyStateMachine, EnemyMovement enemyMovement) : base(enemyStateMachine,enemyMovement)
         {
             
@@ -12,8 +13,8 @@ namespace EnemyStates.EnemyStates
 
         public override void Enter()
         {
-            enemyTakenDamage = new EventBinding<EnemyTakenDamageEvent>(OnTakenDamage);
-            EventBus<EnemyTakenDamageEvent>.Subscribe(enemyTakenDamage);
+            _enemyTakenDamage = new EventBinding<EnemyTakenDamageEvent>(OnTakenDamage);
+            EventBus<EnemyTakenDamageEvent>.Subscribe(_enemyTakenDamage);
         }
 
         public override void Tick(float deltaTime)
