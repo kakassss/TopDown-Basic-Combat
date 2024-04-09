@@ -2156,11 +2156,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6667786124516552252}
-  - component: {fileID: 3220585611355433540}
   - component: {fileID: 5504486530504801643}
   - component: {fileID: 4879277889418919515}
   - component: {fileID: 6764568940498300718}
   - component: {fileID: 5669346340321081353}
+  - component: {fileID: 5263839686890212176}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -2185,19 +2185,6 @@ Transform:
   - {fileID: 7635368633901597238}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3220585611355433540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7609801184512372203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13204d6eae1335342a08a1ecd151ec01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 111
 --- !u!136 &5504486530504801643
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2276,6 +2263,19 @@ MonoBehaviour:
   PlayerObserveRange: 10
   Player: {fileID: 0}
   EnemyInitPosition: {x: -4.9, y: 0, z: 4.19}
+--- !u!114 &5263839686890212176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7609801184512372203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a28ee5f304429d418511a6acaebd7f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 111
 --- !u!1 &7775827952490886237
 GameObject:
   m_ObjectHideFlags: 0
