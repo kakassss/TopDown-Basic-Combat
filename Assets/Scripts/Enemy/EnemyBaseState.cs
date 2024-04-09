@@ -19,10 +19,15 @@ namespace EnemyStates
             EnemyMovement = enemyMovement;
         }
 
-        protected void TakenDamage()
+        protected void TakenDamageSubscribe()
         {
             _enemyTakenDamage = new EventBinding<EnemyTakenDamageEvent>(OnTakenDamage);
             EventBus<EnemyTakenDamageEvent>.Subscribe(_enemyTakenDamage);
+        }
+
+        protected void TakenDamageUnSubscribe()
+        {
+            EventBus<EnemyTakenDamageEvent>.Unsubscribe(_enemyTakenDamage);
         }
 
         private void OnTakenDamage()

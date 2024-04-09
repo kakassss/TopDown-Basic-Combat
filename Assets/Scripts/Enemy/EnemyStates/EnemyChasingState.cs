@@ -12,6 +12,7 @@ namespace EnemyStates.EnemyStates
 
         public override void Enter()
         {
+            TakenDamageSubscribe();
             Animation_IdleRunBlend(0.1f,0);
         }
 
@@ -30,6 +31,8 @@ namespace EnemyStates.EnemyStates
         {
             EnemyStateMachine.EnemyData.Agent.ResetPath();
             EnemyStateMachine.EnemyData.Agent.velocity = Vector3.zero;
+            
+            TakenDamageUnSubscribe();
         }
         
     }

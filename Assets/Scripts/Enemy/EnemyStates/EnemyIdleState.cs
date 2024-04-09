@@ -13,7 +13,7 @@ namespace EnemyStates.EnemyStates
 
         public override void Enter()
         {
-            TakenDamage();
+            TakenDamageSubscribe();
         }
 
         public override void Tick(float deltaTime)
@@ -32,6 +32,7 @@ namespace EnemyStates.EnemyStates
 
         public override void Exit()
         {
+            TakenDamageSubscribe();
         }
         
     }
