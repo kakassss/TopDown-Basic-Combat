@@ -23,6 +23,7 @@ public class PlayerWeaponDamage : MonoBehaviour
         if (other.TryGetComponent<EnemyHealthAbstractBase>(out EnemyHealthAbstractBase health))
         {
             health.GetDamage(5);
+            EventBus<EnemyTakenDamageEvent>.Fire(new EnemyTakenDamageEvent());
         }
     }
 }
