@@ -1,4 +1,5 @@
 using Enemy;
+using Enemy.EnemyStates;
 using UnityEngine;
 
 namespace EnemyStates
@@ -10,10 +11,23 @@ namespace EnemyStates
         
         private const float DampTime = 0.1f;
         
+        private EventBinding<EnemyTakenDamageEvent> _enemyTakenDamage;
+        
         protected EnemyBaseState(EnemyStateMachine enemyEnemyStateMachine,EnemyMovement enemyMovement)
         {
             EnemyStateMachine = enemyEnemyStateMachine;
             EnemyMovement = enemyMovement;
+        }
+
+        protected void TakenDamage()
+        {
+            _enemyTakenDamage = new EventBinding<EnemyTakenDamageEvent>(OnTakenDamage);
+            EventBus<EnemyTakenDamageEvent>.Subscribe(_enemyTakenDamage);
+        }
+
+        private void OnTakenDamage()
+        {
+            EnemyStateMachine.SwitchState(new EnemyTakenDamageState(EnemyStateMachine,EnemyMovement));
         }
 
         protected bool IsPlayerInXRange(float range)
@@ -58,5 +72,7 @@ namespace EnemyStates
         {
             EnemyStateMachine.EnemyData.Animator.SetFloat(EnemyAnimationsNames.IdleToRunBlend, animationValue,DampTime,deltaTime);
         }
+        
+        
     }
 }

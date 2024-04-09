@@ -13,8 +13,7 @@ namespace EnemyStates.EnemyStates
 
         public override void Enter()
         {
-            _enemyTakenDamage = new EventBinding<EnemyTakenDamageEvent>(OnTakenDamage);
-            EventBus<EnemyTakenDamageEvent>.Subscribe(_enemyTakenDamage);
+            TakenDamage();
         }
 
         public override void Tick(float deltaTime)
@@ -35,10 +34,5 @@ namespace EnemyStates.EnemyStates
         {
         }
         
-        
-        private void OnTakenDamage()
-        {
-            EnemyStateMachine.SwitchState(new EnemyTakenDamageState(EnemyStateMachine,EnemyMovement));
-        }
     }
 }

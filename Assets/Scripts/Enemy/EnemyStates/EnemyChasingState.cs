@@ -31,5 +31,6 @@ namespace EnemyStates.EnemyStates
             EnemyStateMachine.EnemyData.Agent.ResetPath();
             EnemyStateMachine.EnemyData.Agent.velocity = Vector3.zero;
         }
+        
     }
 }
