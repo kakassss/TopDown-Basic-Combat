@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Health
 {
-    public class HealthAbstractBase : MonoBehaviour
+    public abstract class HealthAbstractBase : MonoBehaviour
     {
         [SerializeField] protected int health;
 
